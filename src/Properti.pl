@@ -1,87 +1,12 @@
+% include properti.pl
+
 /*Fakta*/
-
-
-bangunan(a1).
-bangunan(a2).
-bangunan(a3).
-bangunan(b1).
-bangunan(b2).
-bangunan(b3).
-bangunan(c1).
-bangunan(c2).
-bangunan(c3).
-bangunan(d1).
-bangunan(d2).
-bangunan(d3).
-bangunan(e1).
-bangunan(e2).
-bangunan(e3).
-bangunan(f1).
-bangunan(f2).
-bangunan(f3).
-bangunan(g1).
-bangunan(g2).
-bangunan(g3).
-bangunan(h1).
-bangunan(h2).
-
-/*Nama Kota*/
-nama(a1,'Jakarta').
-nama(a2,'Kuala Lumpur').
-nama(a3,'Singapura').
-nama(b1,'Phnom Penh').
-nama(b2,'Manila').
-nama(b3,'Bangkok').
-nama(c1,'Dili').
-nama(c2,'Vientiane').
-nama(c3,'Hanoi').
-nama(d1,'Beijing').
-nama(d2,'Hongkong').
-nama(d3,'Macau').
-nama(e1,'Taipei').
-nama(e2,'Tokyo').
-nama(e3,'Seoul').
-nama(f1,'Pyongyang').
-nama(f2,'Dhaka').
-nama(f3,'New Delhi').
-nama(g1,'Kathmandu').
-nama(g2,'Islamabad').
-nama(g3,'Riyadh').
-nama(h1,'Kuwait').
-nama(h2,'Doha').
-
-/*Deskripsi*/
-deskripsi(a1,'Ibukota Indonesia').
-deskripsi(a2,'Ibukota Malaysia').
-deskripsi(a3,'Ibukota Singapura').
-deskripsi(b1,'Ibukota Kamboja').
-deskripsi(b2,'Ibukota Filipina').
-deskripsi(b3,'Ibukota Thailand').
-deskripsi(c1,'Ibukota Timor Leste').
-deskripsi(c2,'Ibukota Laos').
-deskripsi(c3,'Ibukota Vietnam').
-deskripsi(d1,'Ibukota China').
-deskripsi(d2,'Ibukota Hongkong').
-deskripsi(d3,'Ibukota Makau').
-deskripsi(e1,'Ibukota Taiwan').
-deskripsi(e2,'Ibukota Jepang').
-deskripsi(e3,'Ibukota Korea Selatan').
-deskripsi(f1,'Ibukota Korea Utara').
-deskripsi(f2,'Ibukota Bangladesh').
-deskripsi(f3,'Ibukota India').
-deskripsi(g1,'Ibukota Nepal').
-deskripsi(g2,'Ibukota Pakistan').
-deskripsi(g3,'Ibukota Arab Saudi').
-deskripsi(h1,'Ibukota Kuwait').
-deskripsi(h2,'Ibukota Qatar').
-
-
 /*Daftar Properti*/
 
 /*Jakarta*/
 properti(a1,tanah,200).
 properti(a1,bangunan1,3000).
-properti(a1,bangunan2,4000).
+properti(a1,bangunan2,4000).    
 properti(a1,bangunan3,5000).
 properti(a1,landmark,5200).
 properti(a1,sewatanah,60).

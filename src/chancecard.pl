@@ -47,7 +47,7 @@ write('Anda mendapat kartu get in jail card. Anda akan dipindahkan ke petak penj
 printcard(Y) :- cardresult(Y), Y =:= 4,
 write('Anda mendapat kartu get out of jail card. Simpan kartu ini agar bisa digunakan.').
 printcard(Y) :- cardresult(Y), Y =:= 5,
-write('Anda mendapat kartu angel card. Simpan kartu ini agar bisa digunakan.')
+write('Anda mendapat kartu angel card. Simpan kartu ini agar bisa digunakan.').
 
 % addcard(X) menambahkan kartu X ke dalam listcard
 addcard1(X) :- printcard(Y), card1(Y), assertz(listcard1(Y)).
