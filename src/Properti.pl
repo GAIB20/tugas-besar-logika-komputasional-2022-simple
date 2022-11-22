@@ -116,7 +116,7 @@ properti(a3,sewalandmark,1000).
 
 /*Phnom Penh*/
 properti(b1,tanah,300).
-properti(b1,bangunan1,3200).
+properti(b1,bangunan1,3200).           
 properti(b1,bangunan2,3500).
 properti(b1,bangunan3,3900).
 properti(b1,landmark,4100).
