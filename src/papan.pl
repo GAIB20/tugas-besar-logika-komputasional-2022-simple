@@ -1,4 +1,35 @@
-cellList([fp,e1,e2,e3,cc,f1,f2,f3,wt,g1,g2,g3,tx,cc,h1,h2,go,a1,a2,a3,cc,b1,b2,b3,jl,c1,c2,c3,tx,d1,d2,d3]).
+pos(0,fp).
+pos(1,e1).
+pos(2,e2).
+pos(3,e3).
+pos(4,cc).
+pos(5,f1).
+pos(6,f2).
+pos(7,f3).
+pos(8,wt).
+pos(9,g1).
+pos(10,g2).
+pos(11,g3).
+pos(12,tx).
+pos(13,cc).
+pos(14,h1).
+pos(15,h2).
+pos(16,go).
+pos(17,a1).
+pos(18,a2).
+pos(19,a3).
+pos(20,cc).
+pos(21,b1).
+pos(22,b2).
+pos(23,b3).
+pos(24,jl).
+pos(25,c1).
+pos(26,c2).
+pos(27,c3).
+pos(28,tx).
+pos(29,d1).
+pos(30,d2).
+pos(31,d3).
 heigthMap(9).
 widthMap(9).
 
@@ -12,10 +43,6 @@ printKodeCell(Kode) :- print(' '), print(Kode), print(' ').
 printSymCnt(_,0) :- !.
 printSymCnt(Sym,Cnt) :- print(Sym), Cnt1 is Cnt-1, printSymCnt(Sym,Cnt1).
 
-getIdxVal([A|_],0,A) :- !.
-getIdxVal([_|C],IDX,RES) :- IDX1 is IDX-1, getIdxVal(C,IDX1,RES).
-
-
 map :- upperRow, midRows, bottomRow,nl.
 
 midRows :- 
@@ -28,13 +55,13 @@ printMidRow(-1) :- !.
 printMidRow(I) :-
     I1 is I-1,
     printMidRow(I1),
-    cellList(List),
+    
     heigthMap(H),
     widthMap(W),
     IdxLeft is (2*W+2*H-4)-1 - I,
     IdxRight is W+I,
-    getIdxVal(List,IdxLeft,KodeLeft),
-    getIdxVal(List,IdxRight,KodeRight),
+    pos(IdxLeft,KodeLeft),
+    pos(IdxRight,KodeRight),
     printInfoCell(KodeLeft), print('|'), printKodeCell(KodeLeft), print('|'),
     printTengah(I),
     print('|'), printKodeCell(KodeRight), print('|'), printInfoCell(KodeRight),
@@ -81,9 +108,9 @@ printInfoUpperCellke(-1) :- !.
 printInfoUpperCellke(I) :-
     I1 is I-1,
     printInfoUpperCellke(I1),
-    cellList(List),
+    
     IDX is I,
-    getIdxVal(List,IDX,Kode),
+    pos(IDX,Kode),
     print(' '),
     printInfoCell(Kode).
 
@@ -91,9 +118,8 @@ printUpperCellke(-1) :- !.
 printUpperCellke(I) :-
     I1 is I-1,
     printUpperCellke(I1),
-    cellList(List),
     IDX is I,
-    getIdxVal(List,IDX,Kode),
+    pos(IDX,Kode),
     print('|'),
     printKodeCell(Kode).
 
@@ -112,33 +138,20 @@ printInfoBottomCellke(-1) :- !.
 printInfoBottomCellke(I) :-
     I1 is I-1,
     printInfoBottomCellke(I1),
-    cellList(List),
     heigthMap(H),
     widthMap(W),
     IDX is (W*2+H-2-1)-I,
-    getIdxVal(List,IDX,Kode),
+    pos(IDX,Kode),
     print(' '),
     printInfoCell(Kode).
 
 printBottomCellke(-1) :- !.
-printBottomke(I) :-
+printBottomCellke(I) :-
     I1 is I-1,
-    printBottomke(I1),
-    cellList(List),
+    printBottomCellke(I1),
     heigthMap(H),
     widthMap(W),
     IDX is (W*2+H-2-1)-I,
-    getIdxVal(List,IDX,Kode),
+    pos(IDX,Kode),
     print('|'),
     printKodeCell(Kode).
-
-ujiLoop :-
-    I is 1,
-    repeat,
-    I1 is I+1,
-    I1 = 8.
-
-ujiLoop2 :-
-    repeat,
-    read(X),
-    X = stop.
