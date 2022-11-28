@@ -4,7 +4,7 @@
 :- include('pemain.pl').
 %:- include('penjara.pl').
 :- include('Properti.pl').
-
+:- include('perpajakan.pl').
 
 help :- write('###########################################################################'),nl,
         write('                               MONOPOLY                                    '),nl,
@@ -29,3 +29,4 @@ startGame :- write('##     ##  #######  ##    ##  #######  ########   #######  #
              write('##     ##  #######  ##    ##  #######  ##         #######  ########    ## '),nl,
              initPemain.
 
+    
