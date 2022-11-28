@@ -7,6 +7,7 @@
 :- include('Properti.pl').
 :- include('perpajakan.pl').
 :- include('worldtour.pl').
+:- include('bangkrut.pl').
 
 
 help :- write('###########################################################################'),nl,
