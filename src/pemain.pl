@@ -1,11 +1,9 @@
-:- dynamic(player/7).
+:- dynamic(player/5).
 :- dynamic(curPlayer/1).
 :- dynamic(punyaproperti/3).
 :- dynamic(punyakartu/2).
 :- dynamic(cnt/1).
 :- dynamic(cntcard/1).
-:- dynamic(dadu1/1).
-:- dynamic(dadu2/1).
 :- dynamic(count/1).
 
 
@@ -42,11 +40,13 @@ printAllProperti :- write('Daftar Kepemilikan Properti :'),nl,assertz(cnt(1)),
         retract(cnt(Cnt)), Cnt1 is Cnt+1, assertz(cnt(Cnt1)))).
 /*print kartu yang dimiliki*/
 printAllCard :- write('Daftar Kepemilikan Card :'),nl,assertz(cntcard(1)),
-    forall((punyakartu(X,Y)), 
-        (cntcard(Cnt), print(Cnt), print('. '), print(' '), print(Y),nl,
-        retract(cntcard(Cnt)), Cnt1 is cntcard+1, assertz(cntcard(Cnt1)))).
+    forall((punyakartu(A,B)), 
+        (cntcard(Cntcar), write(Cntcar), write('. '), write(' '), write(B),nl,
+        retract(cntcard(Cntcar)), Cntcard1 is Cntcar+1, assertz(cntcard(Cntcard1)))).
 
 /*throw dice*/
 throwDice :- curPlayer(P), write('Sekarang Giliran '),write(P),random(1,7,X), random(1,7,Y),nl,nl,write('dadu 1 : '),write(X),write('.'),nl,
 write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), write(Z), write(' langkah'),nl,
 (Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);throwDice));gantiPemain).
+
+
