@@ -61,7 +61,7 @@ throwDice :- curPlayer(P), write('Sekarang Giliran '),write(P),random(1,7,X), ra
 write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), write(Z), write(' langkah'),nl,
 (Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);throwDice));gantiPemain).
 
-getmoneypemain(X) :- curPlayer(P),player(P,_,X,_,_).  
-getasetpemain(X) :- curPlayer(P),player(P,_,_,_,X).
-getpropertipemain(X) :- curPlayer(P),player(P,_,_,X,_).
-getlokasipemain(X) :- curPlayer(P),player(P,X,_,_,_).
+getmoneypemain(P,X) :- player(P,_,X,_,_).  
+getasetpemain(P,X) :- player(P,_,_,_,X).
+getpropertipemain(P,X) :- player(P,_,_,X,_).
+getlokasipemain(P,X) :- player(P,X,_,_,_).
