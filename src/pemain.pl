@@ -4,7 +4,7 @@
 :- dynamic(punyakartu/2).
 :- dynamic(cnt/1).
 :- dynamic(count/1).
-
+:- dynamic(totalLangkah/1).
 
 
 
@@ -14,10 +14,11 @@
 initPemain :- 
             asserta(player('P', 'GO',5000,0,5000)), 
             asserta(player('Q', 'GO',5000,0,5000)),
-            asserta(curPlayer('P')),assertz(count(0)).
+            asserta(curPlayer('P')),assertz(count(0)),
+            asserta(totalLangkah(0)).
 
 /*Fungsi ganti pemain untuk mengganti pemain jika awalnya pemain 1 maka akan menjadi pemain 2 dan sebalikna */
-gantiPemain :- retract(count(_)),assertz(count(0)),curPlayer(P),retract(curPlayer(P)),((P = 'P'-> assertz(curPlayer('Q')));assertz(curPlayer('P'))).
+gantiPemain :- retract(totalLangkah(_)), assertz(totalLangkah(0)), retract(count(_)),assertz(count(0)),curPlayer(P),retract(curPlayer(P)),((P = 'P'-> assertz(curPlayer('Q')));assertz(curPlayer('P'))).
 /*Untuk mengecek detail kepemilikan suatu pemain*/
 
 checkPlayerDetail:- \+ startgame,!,fail, print("Belum menjalankan startGame!").
@@ -59,8 +60,8 @@ printAllCard :- write('Daftar Kepemilikan Card :'),nl,assertz(cntcard(1)), curPl
 
 /*throw dice*/
 throwDice :- curPlayer(P), write('Sekarang Giliran '),write(P),random(1,7,X), random(1,7,Y),nl,nl,write('dadu 1 : '),write(X),write('.'),nl,
-write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), write(Z), write(' langkah'),nl,
-(Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);throwDice));gantiPemain).
+write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), retract(totalLangkah(L)), L1 is L + Z, assertz(totalLangkah(L1)), write(Z), write(' langkah'),nl,
+(Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);throwDice)); totalLangkah(Total), getlokasipemain(P,Now), nextLoc(Now,Total,Next), ubahLokasi(Next), isLainKepemilikan, isPajak, isWorldTour, gantiPemain).
 
 getmoneypemain(P,X) :- player(P,_,X,_,_).  
 getasetpemain(P,X) :- player(P,_,_,_,X).

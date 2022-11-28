@@ -342,10 +342,23 @@ print('Harga Sewa Bangunan 2 : '),sewa(X,2,Y3),print(Y3),print('\n'),
 print('Harga Sewa Bangunan 3 : '),sewa(X,3,Y4),print(Y4),print('\n'),
 print('Harga Sewa landmark   : '),sewa(X,'L',Y5),print(Y5),print('\n').
 
+
 isLainKepemilikan :- 
     curPlayer(P),player(P,Lokasi,Totaluang,Totalnilaiproperti,Totalaset),
     P == 'P',
-    milik(Lokasi,Q),kota(Lokasi),Q == 'Q',
+    punyaLokasi(Lokasi,Q),kota(Lokasi),Q == 'Q',
+    hargaSewa(Lokasi,Harga), /*ini buat harga lokasi*/
+    Totaluang < Harga,bangkrut,!.
+isLainKepemilikan :- 
+    curPlayer(P),player(P,Lokasi,Totaluang,Totalnilaiproperti,Totalaset),
+    P == 'Q',
+    punyaLokasi(Lokasi,Q),kota(Lokasi),Q == 'P',
+    hargaSewa(Lokasi,Harga), /*ini buat harga lokasi*/
+    Totaluang < Harga,Bangkrut,!.
+isLainKepemilikan :- 
+    curPlayer(P),player(P,Lokasi,Totaluang,Totalnilaiproperti,Totalaset),
+    P == 'P',
+    punyaLokasi(Lokasi,Q),kota(Lokasi),Q == 'Q',
     hargaSewa(Lokasi,Harga),/*ini buat harga lokasi*/
     retractall(player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
     asserta(player(P, Lokasi, Totaluang-Harga, Totalnilaiproperti,Totalaset)),
@@ -354,21 +367,9 @@ isLainKepemilikan :-
 isLainKepemilikan :- 
     curPlayer(P),player(P,Lokasi,Totaluang,Totalnilaiproperti,Totalaset),
     P == 'Q',
-    milik(Lokasi,Q),kota(Lokasi),Q == 'P',
+    punyaLokasi(Lokasi,Q),kota(Lokasi),Q == 'P',
     hargaSewa(Lokasi,Harga),/*ini buat harga lokasi*/
     retractall(player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
     asserta(player(P, Lokasi, Totaluang-Harga, Totalnilaiproperti,Totalaset)),
     retractall(player(Q, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
     asserta(player(Q, Lokasi, Totaluang+Harga, Totalnilaiproperti,Totalaset)).
-isLainKepemilikan :- 
-    curPlayer(P),player(P,Lokasi,Totaluang,Totalnilaiproperti,Totalaset),
-    P == 'P',
-    milik(Lokasi,Q),kota(Lokasi),Q == 'Q',
-    hargaSewa(Lokasi,Harga),/*ini buat harga lokasi*/
-    Totaluang < Harga,bangkrut.
-isLainKepemilikan :- 
-    curPlayer(P),player(P,Lokasi,Totaluang,Totalnilaiproperti,Totalaset),
-    P == 'Q',
-    milik(Lokasi,Q),kota(Lokasi),Q == 'P',
-    hargaSewa(Lokasi,Harga),/*ini buat harga lokasi*/
-    Totaluang < Harga,bangkrut.
