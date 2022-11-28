@@ -1,31 +1,36 @@
-WorldTourTax(player) :-
+worldTourTax :-
+    curPlayer(P),
     retractall(player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
     asserta(player(P, Lokasi, Totaluang-500, Totalnilaiproperti,Totalaset)).
 
-LewatGo(player) :- 
+lewatGo:- 
+    curPlayer(P),
     retractall(player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
     asserta(player(P, Lokasi, Totaluang+1000, Totalnilaiproperti,Totalaset)).
 
-uang(player,total) :- player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset),total is Totaluang.
-worldTour(Player,Tujuan):- 
-    uang(Player,All),
+uang(Total) :- curPlayer(P), player(P, _, Totaluang, _,_), Total is Totaluang.
+worldTour(Tujuan):- 
+    uang(All),
     All >= 500,
-    pos(X,Tujuan),
+    getPos(Tujuan,X),
     X \= 8,
-    WorldTourTax(Player),
-    (X =:= 15;X=:=14;X=:=13;X=:=12;X=:=11;X=:=10;X=:=9),
-    LewatGo(player),
-    ubahLokasi(Tujuan).
-worldTour(Player,Tujuan):- 
-    uang(Player,All),
+    worldTourTax,
+    (X > 15;X <8),
+    lewatGo,
+    ubahLokasi(Tujuan),!.
+worldTour(Tujuan):- 
+    uang(All),
     All >= 500,
-    pos(X,Tujuan),
+    getPos(Tujuan,X),
     X \= 8,
-    WorldTourTax(Player),
-    ubahLokasi(Tujuan).
-worldTour(Player,Tujuan):- 
-    uang(Player,All),
+    worldTourTax,
+    ubahLokasi(Tujuan),!.
+worldTour(_):- 
+    uang(All),
     All < 500,
-    print("Uang tidak cukup untuk World Tour")print('\n').
+    print("Uang tidak cukup untuk World Tour"),nl.
 
-
+isWorldTour :- curPlayer(P),player(P,Lokasi,_,_,_), Lokasi = 'WT', 
+            print("Selamat datang di world tour!\nSilahkan masukkan kode lokasi tujuan anda: "), 
+            read(Tujuan), 
+            worldTour(Tujuan).
