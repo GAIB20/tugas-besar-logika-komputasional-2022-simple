@@ -49,12 +49,10 @@ printAllProperti :- write('Daftar Kepemilikan Properti :'),nl,assertz(cnt(1)), c
 /*print kartu yang dimiliki*/
 printAllCard :- write('Daftar Kepemilikan Card :'),nl,assertz(cntcard(1)), curPlayer(P),
     forall((punyakartu(P,B)), 
-        (cntcard(Cntcar), write(Cntcar), write('. '), write(' '), write(B),nl,
+        (cntcard(Cntcar), write(Cntcar), write('. '), namakartu(X,Y), write(Y), nl,
         retract(cntcard(Cntcar)), Cntcard1 is Cntcar+1, assertz(cntcard(Cntcard1)))).
 
 /*throw dice*/
 throwDice :- curPlayer(P), write('Sekarang Giliran '),write(P),random(1,7,X), random(1,7,Y),nl,nl,write('dadu 1 : '),write(X),write('.'),nl,
 write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), write(Z), write(' langkah'),nl,
 (Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);throwDice));gantiPemain).
-
-
