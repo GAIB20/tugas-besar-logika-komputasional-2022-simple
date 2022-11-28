@@ -1,44 +1,22 @@
-pos(0,'FP').
-pos(1,'E1').
-pos(2,'E2').
-pos(3,'E3').
-pos(4,'CC').
-pos(5,'F1').
-pos(6,'F2').
-pos(7,'F3').
-pos(8,'WT').
-pos(9,'G1').
-pos(10,'G2').
-pos(11,'G3').
-pos(12,'TX').
-pos(13,'CC').
-pos(14,'H1').
-pos(15,'H2').
-pos(16,'GO').
-pos(17,'A1').
-pos(18,'A2').
-pos(19,'A3').
-pos(20,'CC').
-pos(21,'B1').
-pos(22,'B2').
-pos(23,'B3').
-pos(24,'JL').
-pos(25,'C1').
-pos(26,'C2').
-pos(27,'C3').
-pos(28,'TX').
-pos(29,'D1').
-pos(30,'D2').
-pos(31,'D3').
+listLokasi(['FP','E1','E2','E3','CC','F1','F2','F3','WT','G1','G2','G3','TX','CC','H1','H2','GO','A1','A2','A3','CC','B1','B2','B3','JL','C1','C2','C3','TX','D1','D2','D3']).
 heightMap(9).
 widthMap(9).
 
+getPos(Lokasi,IDX) :- listLokasi(List), getIdx(List,Lokasi,IDX).
+getLoc(IDX,Lokasi) :- listLokasi(List), getVal(List,IDX,Lokasi).
+
+
+getVal([A|_],0,A) :- !.
+getVal([_|C],IDX,RES) :- IDX1 is IDX-1, getVal(C,IDX1,RES).
+getIdx([Val|_],Val,0):- !.
+getIdx([A|C],Val,IDX) :- \+ A = Val, getIdx(C,Val,IDX1), IDX is IDX1+1.
+
 totalLoc(X) :- heightMap(H),widthMap(W), X is H*2+W*2-4.
-nextLoc(A,Dist,B) :- pos(X,A), totalLoc(Len), X1 is (X+Dist) mod (Len), pos(X1,B). 
+nextLoc(A,Dist,B) :- getPos(A,X), totalLoc(Len), X1 is (X+Dist) mod (Len), getLoc(X1,B). 
 
 printEmptyCell :- print('    ').
 
-printInfoCell(Kota) :- tingkatProp(Kota,X1), print(' '), print(X1), print(' '),!.
+printInfoCell(Kota) :- punyaLokasi(P,Kota), tingkatProp(Kota,Tingkat), print(' '), print(P),print(Tingkat), print(' '),!.
 printInfoCell(Kota) :- \+ tingkatProp(Kota,_), printEmptyCell.
 
 printKodeCell(Kode) :- print(' '), print(Kode), print(' ').
@@ -46,7 +24,11 @@ printKodeCell(Kode) :- print(' '), print(Kode), print(' ').
 printSymCnt(_,0) :- !.
 printSymCnt(Sym,Cnt) :- print(Sym), Cnt1 is Cnt-1, printSymCnt(Sym,Cnt1).
 
-map :- upperRow, midRows, bottomRow,nl.
+map :- upperRow, midRows, bottomRow, 
+        getlokasipemain('P',Lokasi1),getlokasipemain('Q',Lokasi2),
+        print('Lokasi sekarang:\n'),
+        print('P: '), print(Lokasi1),nl,
+        print('Q: '), print(Lokasi2),nl.
 
 midRows :- 
     heightMap(H),
@@ -58,13 +40,13 @@ printMidRow(-1) :- !.
 printMidRow(I) :-
     I1 is I-1,
     printMidRow(I1),
-    
+
     totalLoc(LocCnt),
     widthMap(W),
     IdxLeft is LocCnt-1 - I,
     IdxRight is W+I,
-    pos(IdxLeft,KodeLeft),
-    pos(IdxRight,KodeRight),
+    getLoc(IdxLeft,KodeLeft),
+    getLoc(IdxRight,KodeRight),
     printInfoCell(KodeLeft), print('|'), printKodeCell(KodeLeft), print('|'),
     printTengah(I),
     print('|'), printKodeCell(KodeRight), print('|'), printInfoCell(KodeRight),
@@ -113,7 +95,7 @@ printInfoUpperCellke(I) :-
     printInfoUpperCellke(I1),
     
     IDX is I,
-    pos(IDX,Kode),
+    getLoc(IDX,Kode),
     print(' '),
     printInfoCell(Kode).
 
@@ -122,7 +104,7 @@ printUpperCellke(I) :-
     I1 is I-1,
     printUpperCellke(I1),
     IDX is I,
-    pos(IDX,Kode),
+    getLoc(IDX,Kode),
     print('|'),
     printKodeCell(Kode).
 
@@ -144,7 +126,7 @@ printInfoBottomCellke(I) :-
     heightMap(H),
     widthMap(W),
     IDX is (W*2+H-2-1)-I,
-    pos(IDX,Kode),
+    getLoc(IDX,Kode),
     print(' '),
     printInfoCell(Kode).
 
@@ -155,6 +137,6 @@ printBottomCellke(I) :-
     heightMap(H),
     widthMap(W),
     IDX is (W*2+H-2-1)-I,
-    pos(IDX,Kode),
+    getLoc(IDX,Kode),
     print('|'),
     printKodeCell(Kode).
