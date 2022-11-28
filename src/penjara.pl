@@ -1,69 +1,78 @@
-:- include(chancecard.pl).
-
 /* Fakta */
 
-% turncount1 menyimpan jumlah turn pemain1 ada di penjara
-:- dynamic(turncount1/1).
-$ turncount2 menyimpan jumlah turn pemain2 ada di penjara
-:- dynamic(turncount2/1).
+% currentplayer menyimpan pemain saat ini
+:- dynamic(currentplayer/1).
+addPlayer1 :- asserta(currentplayer(1)).
+removePlayer1 :- retract(currentplayer(1)).
+addPlayer2 :- asserta(currentplayer(2)).
+removePlayer2 :- retract(currentplayer(2)).
+
+% jailstatus(0) adalah keadaan pemain tidak berada di penjara
+jailstatus(0).
+% jailstatus(1) adalah keadaan pemain berada di penjara
+jailstatus(1).
+
+% jail menyimpan keadaan pemain, apakah berada di penjara atau tidak
+:- dynamic(jail/2).
+initJail :- currentplayer(X), asserta(jail(X,0)).
+
+% turncount menyimpan jumlah turn pemain berada di penjara
+:- dynamic(turncount/2).
 
 % fineamount(5000) adalah total uang denda yang harus dibayar jika pemain ingin keluar dair penjara
 fineamount(5000).
 
-% penjara1(0) adalah keadaan pemain1 tidak berada di dalam penjara
-penjara1(0).
-% penjara1(1) adalah keadaan pemain1 berada di dalam penjara
-penjara1(1).
-% penjara2(0) adalah keadaan pemain2 tidak berada di dalam penjara
-penjara2(0)
-% penjara2(1) adalah kondisi pemain2 berada di dalam penjara
-penjara2(1).
-
 /* Rules */
 
-% checkpenjara(X) bernilai trua jika pemain berada di dalam penjara
-checkpenjara1(X) :- penjara1(X), X =:= 1.
-checkpenjara2(X) :- penjara2(X), X =:= 1.
+% checkJail mengecek keadaan pemain saat ini
+checkJail(X) :- X =:= 0, print('Anda tidak berada di penjara.').
+checkJail(X) :- X =:= 1, print('Anda berada di penjara.').
 
-% checkkartu(X) bernilai true jika pemain memiliki kartu get out of jail
-checkkartu1(X) :- checkpenjara1(Y), Y =:= 1, retract(listcard1), card1(X), X =:= 4.
-checkkartu2(X) :- checkpenjara2(Y), Y =:= 1, retract(listcard2), card2(X), X =:= 4.
+% inJail memasukkan pemain ke dalam penjara
+inJail :- currentplayer(X), retract(jail(X,0)), assertz(jail(X,1)),
+assertz(turncount(X,0)).
 
-% pakaikartu(X) bernilai true jika pemain memilih untuk menggunakan kartu get out of jail
-pakaikartu1(X) :- checkkartu1(Y), removecard1(Y).
-pakaikartu2(X) :- checkkartu2(Y), removecard2(Y).
+% outJail mengeluarkan pemain dari dalam penjara
+outJail :- currentplayer(X), retract(jail(X,1)), assertz(jail(X,0)),
+retract(turncount(X,Z)).
 
-% checkuang(X) bernilai true jika pemain memiliki uang lebih besar dari denda
-checkuang1(x) :- checkpenjara1(Y), Y =:= 1, retract(uangpemain1), uangpemain1 > fineamount, asserta(uangpemain1), X=uangpemain1.
-checkuang2(x) :- checkpenjara2(Y), Y =:= 1, retract(uangpemain2), uangpemain2 > fineamount, asserta(uangpemain2), X=uangpemain2.
+% printJail menampilkan keadaan pemain saat ini
+printJail :- currentplayer(X), jail(X,Y), checkJail(Y), !.
 
-% bayardenda(X) bernilai true jika pemain memilih untuk membayar denda
-bayardenda1(X) :- checkuang1(Y), retract(uangpemain1), uangpemain1 is Y-fineamount, asserta(uangpemain1).
-bayardenda2(X) :- checkuang2(Y), retract(uangpemain2), uangpemain1 is Y-fineamount, asserta(uangpemain2).
+% checkUse mengecek apakah pemain memiliki Get Out of Jail Card
+checkUse :- currentplayer(X), cardlist(X,Y), Y =:= 4,
+print('Anda memiliki Get Out of Jail Card.'), nl.
 
+% useCard menggunakan Get Out of Jail Card pemain
+useCard :- \+checkUse,
+print('Anda tidak memiliki Get Out of Jail Card'), !.
+useCard :- currentplayer(X), checkUse, retract(cardlist(X,Y)), outJail,
+print('Get Out of Jail Card digunakan. Anda dapat keluar dari penjara.'), !.
 
-% checkdice(X) bernilai true jika hasil lemparan dadu double
-checkdice1(X) :- checkpenjara1(Y), Y =:= 1, retract(dice1pemain1), retract(dice2pemain1), dice1pemain1 =:= 6, dice2pemain1 =:= 6,
-assertz(dice1pemain1), assertz(dice2pemain1).
-checkdice2(X) :- checkpenjara1(Y), Y =:= 1, retract(dice1pemain2), retract(dice2pemain2), dice1pemain2 =:= 6, dice2pemain2 =:= 6,
-assertz(dice1pemain2), assertz(dice2pemain2).
+% checkPay mengecek apakah pemain memiliki uang lebih banyak daripada denda
+checkPay :- currentplayer(X), moneyamount(X,Y), Y >= 5000,
+print('Anda memiliki jumlah uang yang cukup untuk membayar denda'), nl.
 
-% checckturn(X) bernilai true jika turn pemain berada di dalam penjara kurang dari 3
-checkturn1(X) :- checkpenjara1(Y), Y =:= 1, retract(turncount1), turncount1=<3, assertz(turncount1).
-checkturn2(X) :- checkpenjara1(Y), Y =:= 1, retract(turncount2), turncount2=<3, assertz(turncount2).
+% payFine membayar denda untuk keluar dari penjara
+payFine :- \+checkPay,
+print('Anda tidak memiliki jumlah uang yang cukup untuk membayar denda'), !.
+payFine :- currentplayer(X), checkPay, retract(moneyamount(X,Y)),
+Z is Y-5000, assert(moneyamount(X,Z)), outJail,
+print('Membayar denda. Anda dapat keluar dari penjara.'), !.
 
-% turnplus(X) bernilai true jika pemain tidak memilih pakaikartu, bayardenda, tidak mendapat double, dan checkturn bernilai true
-turnplus1(X) :- checkturn1(Y) , \+pakaikartu1(A), \+bayardenda1(B), \+ checkdice1(C),
-retract(turncount1), turncount1 is turncount1+1, assertz(turncount1).
-turnplus2(X) :- checkturn2(Y) , \+pakaikartu2(A), \+bayardenda2(B), \+ checkdice2(C),
-retract(turncount2), turncount2 is turncount2+1, assertz(turncount2).
+% checkTurn mengecek jumlah Turn pemain berada di penjara
+checkTurn :- currentplayer(X), turncount(X,Y), Y =< 3.
 
-% keluarpenjara(X) bernilai true jika melakukan aksi pakaikartu, bayardenda, mendapat double, atau telah menunggu 3 kali giliran.
-keluarpenjara1(X) :- pakaikartu1(Y), penjara1(Z), Z=0.
-keluarpenjara1(X) :- bayardenda1(Y), penjara1(Z), Z=0.
-keluarpenjara1(X) :- checkdice1(Y), penjara1(Z), Z=0.
-keluarpenjara1(X) :- \+checkturn1(Y), penjara1(Z), Z=0.
-keluarpenjara2(X) :- pakaikartu2(Y), penjara2(Z), Z=0.
-keluarpenjara2(X) :- bayardenda2(Y), penjara2(Z), Z=0.
-keluarpenjara2(X) :- checkdice2(Y), penjara2(Z), Z=0.
-keluarpenjara2(X) :- \+checkturn2(Y), penjara2(Z), Z=0.
+% jailAct menampilkan aksi yang dapat dilakukan pemain
+jailAct :- \+checkTurn, outJail,
+print('Sudah 3 Turn di penjara, Anda dapat keluar dari penjara'), !.
+jailAct :- currentplayer(X), jail(X,1), checkTurn, turncount(X,Y),
+print('Jumlah Turn Anda berada di dalam penjara: '), print(Y), nl,
+print('Anda berada di penjara. Berikut aksi yang dapat dilakukan.'), nl,
+print('1. useCard : menggunakan Get Out of Jail Card untuk keluar dari penjara'), nl,
+print('2. payFine : membayar denda untuk keluar dari penjara.'), nl,
+print('3. throwDice : melempar dadu dan menambah turncount.'), !.
+
+% plusJailturn menambah satu pada turncount
+plusJailTurn :- currentplayer(X), retract(turncount(X,Y)), Z is Y+1,
+assert(turncount(X,Z)).
