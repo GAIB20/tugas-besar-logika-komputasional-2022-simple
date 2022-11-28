@@ -9,3 +9,4 @@ mekanismeBangkrut :- condition(Uang, hargaSewa), player(P, Lokasi, Totaluang, To
 condition(Uang,hargaSewa) :- Uang < hargaSewa.
 
 
+isBangkrut:- 
