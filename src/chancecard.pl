@@ -25,8 +25,8 @@ checkRoll(X,Y) :- X > 90, X =< 100, Y = 5, print('Anda mendapat Angel Card. Simp
 % checkCard(X) :- X =:= 1, pindah ke petak pajak.
 % checkCard(X) :- X =:= 2, tambah uang 10000.
 % checkCard(X) :- X =:= 3, pindah ke petak penjara.
-checkCard(X) :- curPlayer(Y), X =:= 4, assertz(punyakartu(Y,4)).
-checkCard(X) :- curPlayer(Y), X =:= 5, assertz(punyakartu(Y,5)).
+checkCard(X) :- curPlayer(Y), X =:= 4, addKartu(Y,4).
+checkCard(X) :- curPlayer(Y), X =:= 5, addKartu(Y,5).
 
 % rollCard memanggil fungsi random, checkRoll, dan checkCard
 rollCard :- random(1, 100, X), checkRoll(X,Y), checkCard(Y), !.
