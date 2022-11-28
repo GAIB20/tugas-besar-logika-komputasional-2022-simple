@@ -54,7 +54,7 @@ printAllProperti :- write('Daftar Kepemilikan Properti :'),nl,assertz(cnt(1)), c
 /*print kartu yang dimiliki*/
 printAllCard :- write('Daftar Kepemilikan Card :'),nl,assertz(cntcard(1)), curPlayer(P),
     forall((punyakartu(P,B)), 
-        (cntcard(Cntcar), write(Cntcar), write('. '), namakartu(X,Y), write(Y), nl,
+        (cntcard(Cntcar), write(Cntcar), write('. '), namakartu(B,Y), write(Y), nl,
         retract(cntcard(Cntcar)), Cntcard1 is Cntcar+1, assertz(cntcard(Cntcard1)))).
 
 /*throw dice*/
