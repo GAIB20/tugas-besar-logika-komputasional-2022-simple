@@ -1,5 +1,4 @@
 % include properti.pl
-:- dynamic(milik/2).
 :- dynamic(tingkatProp/2).
 
 /* list kota */
@@ -101,6 +100,12 @@ namaProperti(2,'Bangunan 2').
 namaProperti(3,'Bangunan 3').
 namaProperti('L','Landmark').
 
+hargaSewa(A,Harga) :- kota(A), tingkatProp(A,Tingkat), sewa(A,Tingkat,Harga).
+hargaAkuisisi(A,Harga) :- kota(A), (tingkatProp(A,Tingkat) -> nextTingkat(Tingkat,Tingkat1), beli(A,Tingkat1,Harga); beli(A,0,Harga)).
+hargaTotalLokasi(A,Harga) :- tingkatProp(A,Tingkat), hargaKumulatif(A,Tingkat,Harga).
+hargaKumulatif(A,0,Harga) :- beli(A,0,Harga),!.
+hargaKumulatif(A,Tingkat,Harga) :- beli(A,Tingkat,Harga1),nextTingkat(Tingkat1,Tingkat), hargaKumulatif(A,Tingkat1,Harga2), Harga is Harga1+Harga2.
+
 checkLocationDetail(Lokasi) :- nama(Lokasi,Nama), deskripsi(Lokasi,Desc),
                                 print('Nama Lokasi      : '), print(Nama), nl,
                                 print('Deskripsi Lokasi : '), print(Desc), nl,
@@ -108,8 +113,10 @@ checkLocationDetail(Lokasi) :- nama(Lokasi,Nama), deskripsi(Lokasi,Desc),
 checkLocationDetail(Lokasi) :- print(Lokasi), print(' bukan merupakan lokasi yang valid! Silahkan masukkan lokasi yang tepat.').
 
 printInfoLokasiTambahan(Lokasi) :- kota(Lokasi), nl,
-                                    print('Kepemilikan         : '), (milik(Lokasi,P) -> print(P);print('-')), nl,
-                                    print('Biaya Sewa Saat Ini : '), (milik(Lokasi,P) -> print('duid');print('-')), nl,
-                                    print('Biaya Akuisisi      : '), (tingkatProp(Lokasi,Prop) -> (nextTingkat(Prop,Prop1) -> beli(Lokasi,Prop1,Harga), print(Harga); print('-')); beli(Lokasi,0,Harga),print(Harga) ), nl,
+                                    print('Kepemilikan         : '), (punyaLokasi(P,Lokasi) -> print(P);print('-')), nl,
+                                    print('Biaya Sewa Saat Ini : '), (punyaLokasi(P,Lokasi) -> (hargaSewa(Lokasi,Harga) -> print(Harga);print('-')) ;print('-')), nl,
+                                    print('Biaya Akuisisi      : '), (hargaAkuisisi(Lokasi,Harga) -> print(Harga);print(-)), nl,
                                     print('Tingkatan Properti  : ' ),(tingkatProp(Lokasi,Prop) -> namaProperti(Prop,Nama), print(Nama);print('-')),!.
-printInfoLokasiTambahan(Lokasi) :- \+ kota(Lokasi).
+printInfoLokasiTambahan(Lokasi) :- Lokasi = 'CC',
+                                    print('list kartu:'),nl,
+                                    forall(namakartu(No,NamaKartu),(print(No),print('. '),print(NamaKartu),nl)).
