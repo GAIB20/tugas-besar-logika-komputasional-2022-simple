@@ -3,7 +3,7 @@
 :- include('lokasi.pl').
 :- include('papan.pl').
 :- include('pemain.pl').
-% :- include('penjara.pl').
+:- include('penjara.pl').
 :- include('Properti.pl').
 :- include('perpajakan.pl').
 :- include('worldtour.pl').
@@ -30,6 +30,6 @@ startGame :- write('\33\[38;5;96m##     ##  #######  ##    ##  #######  ########
              write('##     ## ##     ## ##  #### ##     ## ##        ##     ## ##          ##'),nl,
              write('##     ## ##     ## ##   ### ##     ## ##        ##     ## ##          ##'),nl,
              write('##     ##  #######  ##    ##  #######  ##         #######  ########    ## '),nl,
-             initPemain, assertz(startgame).
+             initPemain, initJail, assertz(startgame).
 
-reset :- retract(_).    
+reset :- retract(_).

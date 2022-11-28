@@ -19,24 +19,24 @@ assertz(turncount(X,0)).
 
 % outOfJail mengeluarkan pemain dari dalam penjara
 outOfJail :- curPlayer(X), retract(jail(X,1)), assertz(jail(X,0)),
-retract(turncount(X,Z)).
+retract(turncount(X,_)).
 
 % checkUse mengecek apakah pemain memiliki Get Out Of Jail Card
 checkUse :- curPlayer(X), punyakartu(X,Y), Y =:= 4.
 
 % useCard menggunakan Get Out of Jail Card pemain
 useCard :- \+checkUse,
-print('Anda tidak memiliki Get Out Of Jail Card'), !.
+print('Anda tidak memiliki Get Out Of Jail Card.'), !.
 useCard :- curPlayer(X), checkUse, retract(punyakartu(X,4)), outOfJail,
 print('Get Out of Jail Card digunakan. Anda dapat keluar dari penjara.'), !.
 
 % checkPay mengecek apakah pemain memiliki uang lebih banyak daripada denda
-checkPay :- curPlayer(X), getmoneypemain(Y), Y >= 5000.
+checkPay :- curPlayer(X), getmoneypemain(X,Y), Y >= 5000.
 
 % payFine membayar denda untuk keluar dari penjara
 payFine :- \+checkPay,
 print('Anda tidak memiliki jumlah uang yang cukup untuk membayar denda'), !.
-payFine :- curPlayer(X), checkPay, getmoneypemain(Y), Y1 is Y-5000, ubahMoney(Y1),
+payFine :- curPlayer(X), checkPay, getmoneypemain(X,Y), Y1 is Y-5000, ubahMoney(Y1),
 outOfJail, print('Membayar denda. Anda dapat keluar dari penjara.'), !.
 
 % checkTurn mengecek jumlah Turn pemain berada di penjara

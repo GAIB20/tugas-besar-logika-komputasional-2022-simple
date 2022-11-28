@@ -18,7 +18,7 @@ checkRoll(X,Y) :- X > 90, X =< 100, Y = 5, print('Anda mendapat Angel Card. Simp
 
 % checkCard(X) menentukan aksi berdasarkan angka kartu
 % checkCard(X) :- X =:= 1, pindah ke petak pajak.
-checkCard(X) :- X =:= 2, curPlayer(Y), getmoneypemain(Z), Z1 is Z+10000, ubahMoney(Z1).
+checkCard(X) :- curPlayer(Y), X =:= 2, getmoneypemain(Y,Z), Z1 is Z+10000, ubahMoney(Z1).
 checkCard(X) :- X =:= 3, toJail.
 checkCard(X) :- curPlayer(Y), X =:= 4, addKartu(Y,X).
 checkCard(X) :- curPlayer(Y), X =:= 5, addKartu(Y,X).
