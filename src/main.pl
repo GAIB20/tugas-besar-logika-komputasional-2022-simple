@@ -1,10 +1,13 @@
+:- dynamic(startgame/0).
 :- include('chancecard.pl').
 :- include('lokasi.pl').
 :- include('papan.pl').
 :- include('pemain.pl').
-%:- include('penjara.pl').
+% :- include('penjara.pl').
 :- include('Properti.pl').
 :- include('perpajakan.pl').
+:- include('worldtour.pl').
+
 
 help :- write('###########################################################################'),nl,
         write('                               MONOPOLY                                    '),nl,
@@ -20,13 +23,13 @@ help :- write('#################################################################
 
 /*pemain 1 bakal throwDice Awal permainan kan bakal di go itu di nomor 16, nah jadi untuk selanjutnya*/ 
 
-startGame :- write('##     ##  #######  ##    ##  #######  ########   #######  ##       ##    ## '),nl,
+startGame :- write('\33\[38;5;96m##     ##  #######  ##    ##  #######  ########   #######  ##       ##    ## \33\[0m'),nl,
              write('###   ### ##     ## ###   ## ##     ## ##     ## ##     ## ##        ##  ##'),nl,
              write('#### #### ##     ## ####  ## ##     ## ##     ## ##     ## ##         ####'),nl,
              write('## ### ## ##     ## ## ## ## ##     ## ########  ##     ## ##          ##'),nl,
              write('##     ## ##     ## ##  #### ##     ## ##        ##     ## ##          ##'),nl,
              write('##     ## ##     ## ##   ### ##     ## ##        ##     ## ##          ##'),nl,
              write('##     ##  #######  ##    ##  #######  ##         #######  ########    ## '),nl,
-             initPemain.
+             initPemain, assertz(startgame).
 
-    
+reset :- retract(_).    
