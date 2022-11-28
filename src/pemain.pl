@@ -12,8 +12,8 @@
 /*Fungsi init pemain adalah menginitkan semua nilai-nilai awal dan menset curPlayer  yang akan pertama kali bermain adalah pemain 1*/
 
 initPemain :- 
-            asserta(player('P', 'GO',525,0,50)), 
-            asserta(player('Q', 'GO',50,0,50)),
+            asserta(player('P', 'GO',5000,0,5000)), 
+            asserta(player('Q', 'GO',5000,0,5000)),
             asserta(curPlayer('P')),assertz(count(0)).
 
 /*Fungsi ganti pemain untuk mengganti pemain jika awalnya pemain 1 maka akan menjadi pemain 2 dan sebalikna */
@@ -60,3 +60,7 @@ printAllCard :- write('Daftar Kepemilikan Card :'),nl,assertz(cntcard(1)), curPl
 throwDice :- curPlayer(P), write('Sekarang Giliran '),write(P),random(1,7,X), random(1,7,Y),nl,nl,write('dadu 1 : '),write(X),write('.'),nl,
 write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), write(Z), write(' langkah'),nl,
 (Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);throwDice));gantiPemain).
+
+getmoneypemain(X) :- curPlayer(P),player(P,B,C,D,E),X is C.  
+getasetpemain(X) :- curPlayer(P),player(P,B,C,D,E),X is E.
+getpropertipemain(X) :- curPlayer(P),player(P,B,C,D,E),X is D.  
