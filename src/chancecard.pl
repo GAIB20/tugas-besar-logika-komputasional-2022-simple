@@ -24,4 +24,4 @@ checkCard(X) :- curPlayer(Y), X =:= 4, addKartu(Y,X).
 checkCard(X) :- curPlayer(Y), X =:= 5, addKartu(Y,X).
 
 % rollCard memanggil fungsi random, checkRoll, dan checkCard
-rollCard :- random(1, 100, X), checkRoll(X,Y), checkCard(Y), !.
+rollCard :- random(1, 100, X), checkRoll(X,Y), checkCard(Y), gantiPemain, !.
