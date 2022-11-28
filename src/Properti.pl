@@ -346,29 +346,29 @@ isLainKepemilikan :-
     curPlayer(P),player(P,Lokasi,Totaluang,Totalnilaiproperti,Totalaset),
     P == 'P',
     milik(Lokasi,Q),kota(Lokasi),Q == 'Q',
-    harga is hargaLokasi(Lokasi),/*ini buat harga lokasi*/
+    hargaSewa(Lokasi,Harga),/*ini buat harga lokasi*/
     retractall(player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
-    asserta(player(P, Lokasi, Totaluang-harga, Totalnilaiproperti,Totalaset)),
+    asserta(player(P, Lokasi, Totaluang-Harga, Totalnilaiproperti,Totalaset)),
     retractall(player(Q, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
-    asserta(player(Q, Lokasi, Totaluang+harga, Totalnilaiproperti,Totalaset)).
+    asserta(player(Q, Lokasi, Totaluang+Harga, Totalnilaiproperti,Totalaset)).
 isLainKepemilikan :- 
     curPlayer(P),player(P,Lokasi,Totaluang,Totalnilaiproperti,Totalaset),
     P == 'Q',
     milik(Lokasi,Q),kota(Lokasi),Q == 'P',
-    harga is hargaLokasi(Lokasi),/*ini buat harga lokasi*/
+    hargaSewa(Lokasi,Harga),/*ini buat harga lokasi*/
     retractall(player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
-    asserta(player(P, Lokasi, Totaluang-harga, Totalnilaiproperti,Totalaset)),
+    asserta(player(P, Lokasi, Totaluang-Harga, Totalnilaiproperti,Totalaset)),
     retractall(player(Q, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
-    asserta(player(Q, Lokasi, Totaluang+harga, Totalnilaiproperti,Totalaset)).
+    asserta(player(Q, Lokasi, Totaluang+Harga, Totalnilaiproperti,Totalaset)).
 isLainKepemilikan :- 
     curPlayer(P),player(P,Lokasi,Totaluang,Totalnilaiproperti,Totalaset),
     P == 'P',
     milik(Lokasi,Q),kota(Lokasi),Q == 'Q',
-    harga is hargaLokasi(Lokasi),/*ini buat harga lokasi*/
-    Totaluang < harga,bangkrut.
+    hargaSewa(Lokasi,Harga),/*ini buat harga lokasi*/
+    Totaluang < Harga,bangkrut.
 isLainKepemilikan :- 
     curPlayer(P),player(P,Lokasi,Totaluang,Totalnilaiproperti,Totalaset),
     P == 'Q',
     milik(Lokasi,Q),kota(Lokasi),Q == 'P',
-    harga is hargaLokasi(Lokasi),/*ini buat harga lokasi*/
-    Totaluang < harga,bangkrut.
+    hargaSewa(Lokasi,Harga),/*ini buat harga lokasi*/
+    Totaluang < Harga,bangkrut.
