@@ -1,4 +1,3 @@
-% include properti.pl
 
 /*Fakta*/
 /*Daftar Properti*/

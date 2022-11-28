@@ -48,5 +48,5 @@ printAllCard :- write('Daftar Kepemilikan Card :'),nl,assertz(cntcard(1)),
 
 /*throw dice*/
 throwDice :- curPlayer(P), write('Sekarang Giliran '),write(P),random(1,7,X), random(1,7,Y),nl,nl,write('dadu 1 : '),write(X),write('.'),nl,
-write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), write(Z), write(' langkah'),
-((Y =:= X -> write('double'), retract(count(A)), Z is A+1, assertz(count(Z)),((Z =:= 3 -> write('Anda masuk penjara'), gantiPemain);throwDice));gantiPemain).
+write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), write(Z), write(' langkah'),nl,
+(Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);throwDice));gantiPemain).
