@@ -3,8 +3,10 @@
 :- dynamic(punyaLokasi/2).
 :- dynamic(punyakartu/2).
 :- dynamic(cnt/1).
-:- dynamic(cntcard/1).
 :- dynamic(count/1).
+
+
+
 
 
 /*Fungsi init pemain adalah menginitkan semua nilai-nilai awal dan menset curPlayer  yang akan pertama kali bermain adalah pemain 1*/
@@ -17,6 +19,8 @@ initPemain :-
 /*Fungsi ganti pemain untuk mengganti pemain jika awalnya pemain 1 maka akan menjadi pemain 2 dan sebalikna */
 gantiPemain :- retract(count(_)),assertz(count(0)),curPlayer(P),retract(curPlayer(P)),((P = 'P'-> assertz(curPlayer('Q')));assertz(curPlayer('P'))).
 /*Untuk mengecek detail kepemilikan suatu pemain*/
+
+checkPlayerDetail:- \+ startgame,!,fail, print("Belum menjalankan startGame!").
 checkPlayerDetail:- curPlayer(P),player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset),write('Informasi Player '), write('('),write(P),write(')'),nl,nl,
                                 write('Lokasi                    :'), write(Lokasi),nl,
                                 write('Total Uang                :'), write(Totaluang),nl,
