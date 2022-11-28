@@ -4,7 +4,7 @@
 % jail(X,1) adalah pemain X berada di penjara
 % Jumlah denda yang dibayarkan untuk keluar dari penjara adalah 5000
 
-% jail menyimpan keadaan pemain, apakah berada di penjara atau tidak
+% jail(X,Y) menyimpan keadaan pemain X, apakah berada di penjara atau tidak
 :- dynamic(jail/2).
 initJail :- assertz(jail('P',0)), assertz(jail('Q',0)).
 
