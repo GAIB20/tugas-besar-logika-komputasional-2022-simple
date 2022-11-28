@@ -17,6 +17,10 @@ initJail :- assertz(jail('P',0)), assertz(jail('Q',0)).
 toJail :- curPlayer(X), retract(jail(X,0)), assertz(jail(X,1)),
 assertz(jailturn(X,0)).
 
+% isJail mengecek lokasi pemain
+isJail :- curPlayer(P),player(P,Lokasi,_,_,_), Lokasi = 'JL', 
+print('Anda masuk ke dalam penjara.\n'), toJail.
+
 % outOfJail mengeluarkan pemain dari dalam penjara
 outOfJail :- curPlayer(X), retract(jail(X,1)), assertz(jail(X,0)),
 retract(jailturn(X,_)).
@@ -47,7 +51,7 @@ jailAct :- \+checkTurn, outOfJail,
 print('Sudah 3 Turn di penjara. Anda dapat keluar dari penjara'), !.
 jailAct :- curPlayer(X), checkTurn, jailturn(X,Y),
 print('Jumlah Turn Anda berada di dalam penjara: '), print(Y), print(' Turn'), nl,
-print('Anda berada di penjara. Berikut aksi yang dapat dilakukan.'), nl,
+print('Berikut aksi yang dapat dilakukan.'), nl,
 print('1. useCard : menggunakan Get Out of Jail Card untuk keluar dari penjara'), nl,
 print('2. payFine : membayar denda untuk keluar dari penjara.'), nl,
 print('3. throwDice : melempar dadu dan menambah jailturn.'), !.
