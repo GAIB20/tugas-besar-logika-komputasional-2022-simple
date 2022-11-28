@@ -1,42 +1,45 @@
-pos(0,fp).
-pos(1,e1).
-pos(2,e2).
-pos(3,e3).
-pos(4,cc).
-pos(5,f1).
-pos(6,f2).
-pos(7,f3).
-pos(8,wt).
-pos(9,g1).
-pos(10,g2).
-pos(11,g3).
-pos(12,tx).
-pos(13,cc).
-pos(14,h1).
-pos(15,h2).
-pos(16,go).
-pos(17,a1).
-pos(18,a2).
-pos(19,a3).
-pos(20,cc).
-pos(21,b1).
-pos(22,b2).
-pos(23,b3).
-pos(24,jl).
-pos(25,c1).
-pos(26,c2).
-pos(27,c3).
-pos(28,tx).
-pos(29,d1).
-pos(30,d2).
-pos(31,d3).
-heigthMap(9).
+pos(0,'FP').
+pos(1,'E1').
+pos(2,'E2').
+pos(3,'E3').
+pos(4,'CC').
+pos(5,'F1').
+pos(6,'F2').
+pos(7,'F3').
+pos(8,'WT').
+pos(9,'G1').
+pos(10,'G2').
+pos(11,'G3').
+pos(12,'TX').
+pos(13,'CC').
+pos(14,'H1').
+pos(15,'H2').
+pos(16,'GO').
+pos(17,'A1').
+pos(18,'A2').
+pos(19,'A3').
+pos(20,'CC').
+pos(21,'B1').
+pos(22,'B2').
+pos(23,'B3').
+pos(24,'JL').
+pos(25,'C1').
+pos(26,'C2').
+pos(27,'C3').
+pos(28,'TX').
+pos(29,'D1').
+pos(30,'D2').
+pos(31,'D3').
+heightMap(9).
 widthMap(9).
+
+totalLoc(X) :- heightMap(H),widthMap(W), X is H*2+W*2-4.
+nextLoc(A,Dist,B) :- pos(X,A), totalLoc(Len), X1 is (X+Dist) mod (Len), pos(X1,B). 
 
 printEmptyCell :- print('    ').
 
-printInfoCell(Kota) :- bangunan(Kota,X1), print(' '), print(X1), print(' '),!.
-printInfoCell(Kota) :- \+ bangunan(Kota,_), printEmptyCell.
+printInfoCell(Kota) :- tingkatProp(Kota,X1), print(' '), print(X1), print(' '),!.
+printInfoCell(Kota) :- \+ tingkatProp(Kota,_), printEmptyCell.
 
 printKodeCell(Kode) :- print(' '), print(Kode), print(' ').
 
@@ -46,7 +49,7 @@ printSymCnt(Sym,Cnt) :- print(Sym), Cnt1 is Cnt-1, printSymCnt(Sym,Cnt1).
 map :- upperRow, midRows, bottomRow,nl.
 
 midRows :- 
-    heigthMap(H),
+    heightMap(H),
     H > 2,  
     I is H-2-1,
     printMidRow(I).
@@ -56,9 +59,9 @@ printMidRow(I) :-
     I1 is I-1,
     printMidRow(I1),
     
-    heigthMap(H),
+    totalLoc(LocCnt),
     widthMap(W),
-    IdxLeft is (2*W+2*H-4)-1 - I,
+    IdxLeft is LocCnt-1 - I,
     IdxRight is W+I,
     pos(IdxLeft,KodeLeft),
     pos(IdxRight,KodeRight),
@@ -73,13 +76,13 @@ printTengah(I) :-
     Len is (W-2)*5-1,
     printSymCnt('-',Len),!.
 printTengah(I) :-
-    heigthMap(H),
+    heightMap(H),
     I =:= H-2-1,
     widthMap(W),
     Len is (W-2)*5-1,
     printSymCnt('-',Len),!.
 printTengah(I) :-
-    heigthMap(H),
+    heightMap(H),
     I =:= (H-2-1) div 2,
     widthMap(W),
     Len is (W-2)*5-1,
@@ -138,7 +141,7 @@ printInfoBottomCellke(-1) :- !.
 printInfoBottomCellke(I) :-
     I1 is I-1,
     printInfoBottomCellke(I1),
-    heigthMap(H),
+    heightMap(H),
     widthMap(W),
     IDX is (W*2+H-2-1)-I,
     pos(IDX,Kode),
@@ -149,7 +152,7 @@ printBottomCellke(-1) :- !.
 printBottomCellke(I) :-
     I1 is I-1,
     printBottomCellke(I1),
-    heigthMap(H),
+    heightMap(H),
     widthMap(W),
     IDX is (W*2+H-2-1)-I,
     pos(IDX,Kode),

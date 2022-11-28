@@ -3,93 +3,103 @@
 :- dynamic(tingkatProp/2).
 
 /* list kota */
-kota(a1).
-kota(a2).
-kota(a3).
-kota(b1).
-kota(b2).
-kota(b3).
-kota(c1).
-kota(c2).
-kota(c3).
-kota(d1).
-kota(d2).
-kota(d3).
-kota(e1).
-kota(e2).
-kota(e3).
-kota(f1).
-kota(f2).
-kota(f3).
-kota(g1).
-kota(g2).
-kota(g3).
-kota(h1).
-kota(h2).
+kota('A1').
+kota('A2').
+kota('A3').
+kota('B1').
+kota('B2').
+kota('B3').
+kota('C1').
+kota('C2').
+kota('C3').
+kota('D1').
+kota('D2').
+kota('D3').
+kota('E1').
+kota('E2').
+kota('E3').
+kota('F1').
+kota('F2').
+kota('F3').
+kota('G1').
+kota('G2').
+kota('G3').
+kota('H1').
+kota('H2').
 
 /*Nama Lokasi*/
-nama(a1,'Jakarta').
-nama(a2,'Kuala Lumpur').
-nama(a3,'Singapura').
-nama(b1,'Phnom Penh').
-nama(b2,'Manila').
-nama(b3,'Bangkok').
-nama(c1,'Dili').
-nama(c2,'Vientiane').
-nama(c3,'Hanoi').
-nama(d1,'Beijing').
-nama(d2,'Hongkong').
-nama(d3,'Macau').
-nama(e1,'Taipei').
-nama(e2,'Tokyo').
-nama(e3,'Seoul').
-nama(f1,'Pyongyang').
-nama(f2,'Dhaka').
-nama(f3,'New Delhi').
-nama(g1,'Kathmandu').
-nama(g2,'Islamabad').
-nama(g3,'Riyadh').
-nama(h1,'Kuwait').
-nama(h2,'Doha').
-nama(cc,'Change Card').
-nama(jl,'Jail').
-nama(tx,'Kantor Pajak').
-nama(fp,'Free Parking').
-nama(wt,'World Tour').
+nama('A1','Jakarta').
+nama('A2','Kuala Lumpur').
+nama('A3','Singapura').
+nama('B1','Phnom Penh').
+nama('B2','Manila').
+nama('B3','Bangkok').
+nama('C1','Dili').
+nama('C2','Vientiane').
+nama('C3','Hanoi').
+nama('D1','Beijing').
+nama('D2','Hongkong').
+nama('D3','Macau').
+nama('E1','Taipei').
+nama('E2','Tokyo').
+nama('E3','Seoul').
+nama('F1','Pyongyang').
+nama('F2','Dhaka').
+nama('F3','New Delhi').
+nama('G1','Kathmandu').
+nama('G2','Islamabad').
+nama('G3','Riyadh').
+nama('H1','Kuwait').
+nama('H2','Doha').
+nama('CC','Change Card').
+nama('JL','Jail').
+nama('TX','Kantor Pajak').
+nama('FP','Free Parking').
+nama('WT','World Tour').
 
 
 /*Deskripsi*/
-deskripsi(a1,'Ibukota Indonesia').
-deskripsi(a2,'Ibukota Malaysia').
-deskripsi(a3,'Ibukota Singapura').
-deskripsi(b1,'Ibukota Kamboja').
-deskripsi(b2,'Ibukota Filipina').
-deskripsi(b3,'Ibukota Thailand').
-deskripsi(c1,'Ibukota Timor Leste').
-deskripsi(c2,'Ibukota Laos').
-deskripsi(c3,'Ibukota Vietnam').
-deskripsi(d1,'Ibukota China').
-deskripsi(d2,'Ibukota Hongkong').
-deskripsi(d3,'Ibukota Makau').
-deskripsi(e1,'Ibukota Taiwan').
-deskripsi(e2,'Ibukota Jepang').
-deskripsi(e3,'Ibukota Korea Selatan').
-deskripsi(f1,'Ibukota Korea Utara').
-deskripsi(f2,'Ibukota Bangladesh').
-deskripsi(f3,'Ibukota India').
-deskripsi(g1,'Ibukota Nepal').
-deskripsi(g2,'Ibukota Pakistan').
-deskripsi(g3,'Ibukota Arab Saudi').
-deskripsi(h1,'Ibukota Kuwait').
-deskripsi(h2,'Ibukota Qatar').
-deskripsi(cc,'Ujilah keberuntungan anda ditempat ini!\nAnda berhak untuk mendapatkan salah satu dari kartu berikut:\n').
-deskripsi(jl,'Tempat para orang ilegal berdiam diri.\nAnda akan dipindahkan ke sini apabila anda mendapatkan kartu masuk penjara atau mendapatkan double 3 kali berturut-turut!').
-deskripsi(tx,'Anda harus membayar pajak apabila anda berhenti disini!').
-deskripsi(fp,'Parkir bebas, pemain tidak mendapatkan efek apa-apa ketika berhenti di lokasi ini!').
-deskripsi(wt,'Anda dapat berpindah ke mana saja! Tentunya dengan membayar uang sebesar X% dari aset Anda.').
+deskripsi('A1','Ibukota Indonesia').
+deskripsi('A2','Ibukota Malaysia').
+deskripsi('A3','Ibukota Singapura').
+deskripsi('B1','Ibukota Kamboja').
+deskripsi('B2','Ibukota Filipina').
+deskripsi('B3','Ibukota Thailand').
+deskripsi('C1','Ibukota Timor Leste').
+deskripsi('C2','Ibukota Laos').
+deskripsi('C3','Ibukota Vietnam').
+deskripsi('D1','Ibukota China').
+deskripsi('D2','Ibukota Hongkong').
+deskripsi('D3','Ibukota Makau').
+deskripsi('E1','Ibukota Taiwan').
+deskripsi('E2','Ibukota Jepang').
+deskripsi('E3','Ibukota Korea Selatan').
+deskripsi('F1','Ibukota Korea Utara').
+deskripsi('F2','Ibukota Bangladesh').
+deskripsi('F3','Ibukota India').
+deskripsi('G1','Ibukota Nepal').
+deskripsi('G2','Ibukota Pakistan').
+deskripsi('G3','Ibukota Arab Saudi').
+deskripsi('H1','Ibukota Kuwait').
+deskripsi('H2','Ibukota Qatar').
+deskripsi('CC','Ujilah keberuntungan anda ditempat ini!\nAnda berhak untuk mendapatkan salah satu dari kartu berikut:\n').
+deskripsi('JL','Tempat para orang ilegal berdiam diri.\nAnda akan dipindahkan ke sini apabila anda mendapatkan kartu masuk penjara atau mendapatkan double 3 kali berturut-turut!').
+deskripsi('TX','Anda harus membayar pajak apabila anda berhenti disini!').
+deskripsi('FP','Parkir bebas, pemain tidak mendapatkan efek apa-apa ketika berhenti di lokasi ini!').
+deskripsi('WT','Anda dapat berpindah ke mana saja! Tentunya dengan membayar uang sebesar X% dari aset Anda.').
 
-initTingkat :- 
-    forall( kota(A),(assertz(tingkatProp(A,tanah)))).
+
+nextTingkat(0,1).
+nextTingkat(1,2).
+nextTingkat(2,3).
+nextTingkat(3,'L').
+naikTingkatProperti(A) :- \+ tingkatProp(A,_), assertz(tingkatProp(A,0)).
+naikTingkatProperti(A) :- retract(tingkatProp(A,B)), nextTingkat(B,B1), assertz(tingkatProp(A,B1)).
+namaProperti(0,'Tanah').
+namaProperti(1,'Bangunan 1').
+namaProperti(2,'Bangunan 2').
+namaProperti(3,'Bangunan 3').
+namaProperti('L','Landmark').
 
 checkLocationDetail(Lokasi) :- nama(Lokasi,Nama), deskripsi(Lokasi,Desc),
                                 print('Nama Lokasi      : '), print(Nama), nl,
@@ -97,9 +107,9 @@ checkLocationDetail(Lokasi) :- nama(Lokasi,Nama), deskripsi(Lokasi,Desc),
                                 printInfoLokasiTambahan(Lokasi),!.
 checkLocationDetail(Lokasi) :- print(Lokasi), print(' bukan merupakan lokasi yang valid! Silahkan masukkan lokasi yang tepat.').
 
-printInfoLokasiTambahan(Lokasi) :- kota(Lokasi), tingkatProp(Lokasi,Tingkat), nl,
+printInfoLokasiTambahan(Lokasi) :- kota(Lokasi), nl,
                                     print('Kepemilikan         : '), (milik(Lokasi,P) -> print(P);print('-')), nl,
                                     print('Biaya Sewa Saat Ini : '), (milik(Lokasi,P) -> print('duid');print('-')), nl,
-                                    print('Biaya Akuisisi      : '), properti(Lokasi,Tingkat,Harga1), print(Harga1), nl,
-                                    print('Tingkatan Properti  : ' ), print(Tingkat),!.
-printInfoLokasiTambahan(Lokasi) :- !.
+                                    print('Biaya Akuisisi      : '), (tingkatProp(Lokasi,Prop) -> (nextTingkat(Prop,Prop1) -> beli(Lokasi,Prop1,Harga), print(Harga); print('-')); beli(Lokasi,0,Harga),print(Harga) ), nl,
+                                    print('Tingkatan Properti  : ' ),(tingkatProp(Lokasi,Prop) -> namaProperti(Prop,Nama), print(Nama);print('-')),!.
+printInfoLokasiTambahan(Lokasi) :- \+ kota(Lokasi).
