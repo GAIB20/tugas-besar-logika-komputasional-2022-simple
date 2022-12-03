@@ -30,7 +30,7 @@ checkUse :- curPlayer(X), punyakartu(X,Y), Y =:= 4.
 
 % useCard menggunakan Get Out of Jail Card pemain
 useCard :- \+checkUse,
-print('\nAnda tidak memiliki Get Out Of Jail Card.\n'), !.
+print('\nAnda tidak memiliki Get Out Of Jail Card. Silakan pilih aksi lain.\n'), !.
 useCard :- curPlayer(X), checkUse, retract(punyakartu(X,4)), outOfJail,
 print('\nGet Out of Jail Card digunakan. Anda keluar dari penjara.\n'), !.
 
@@ -39,9 +39,9 @@ checkPay :- curPlayer(X), getmoneypemain(X,Y), Y >= 5000.
 
 % payFine membayar denda untuk keluar dari penjara
 payFine :- \+checkPay,
-print('\nAnda tidak memiliki jumlah uang yang cukup untuk membayar denda\n'), !.
+print('\nAnda tidak memiliki jumlah uang yang cukup untuk membayar denda. Silakan pilih aksi lain.\n'), !.
 payFine :- curPlayer(X), checkPay, getmoneypemain(X,Y), Y1 is Y-5000, ubahMoney(Y1),
-outOfJail, print('Membayar denda. Anda dapat keluar dari penjara.\n'),  !.
+outOfJail, print('\nAnda membayar denda (sebesar 5000) dan keluar dari penjara.\n'),  !.
 
 % checkTurn mengecek jumlah Turn pemain berada di penjara
 checkTurn :- curPlayer(X), jailturn(X,Y), Y < 3.
@@ -53,7 +53,7 @@ jailAct :- curPlayer(X), checkTurn, jailturn(X,Y),
 print('\nJumlah Turn pemain '), print(X), print(' berada di dalam penjara: '), print(Y), print(' Turn.\n'),
 print('Berikut aksi yang dapat dilakukan.\n'),
 print('1. useCard : menggunakan Get Out of Jail Card untuk keluar dari penjara.\n'),
-print('2. payFine : membayar denda untuk keluar dari penjara.\n'),
+print('2. payFine : membayar denda (sebesar 5000) untuk keluar dari penjara.\n'),
 print('3. throwDice : melempar dadu dan menambah jailturn.\n'), !.
 
 % plusJailTurn menambah satu jailturn
