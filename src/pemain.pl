@@ -67,8 +67,8 @@ throwDice :- curPlayer(P),jail(P,0),nl,random(1,7,X),random(1,7,Y),write('dadu 1
 write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), retract(totalLangkah(L)), L1 is L + Z, 
 assertz(totalLangkah(L1)), write(Z), write(' langkah'),nl,
 (Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),
-(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);write('')));(retract(count(_)),assertz(count(0)),gantiPemain)),totalLangkah(Total), 
-getlokasipemain(P,Now), nextLoc(Now,Total,Next), ubahLokasi(Next).
+(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);write('')));(retract(count(_)),assertz(count(0)),gantiPemain)), 
+getlokasipemain(P,Now), nextLoc(Now,L1,Next), ubahLokasi(Next).
 
 throwDice :- curPlayer(P), jail(P,1), random(1,7,X), random(1,7,Y), write('\ndadu 1 : '), write(X), write('.\n'),
 write('dadu 2 : '), write(Y), write('.\n'), Z is X+Y,
