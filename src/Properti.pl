@@ -346,31 +346,45 @@ print('Harga Sewa landmark   : '),sewa(X,'L',Y5),print(Y5),print('\n').
 checkBayarSewa :- 
     curPlayer(P),getlokasipemain(P,Lokasi), getmoneypemain(P,Uang),
     P = 'P',
-    punyaLokasi(Lokasi,'Q'),kota(Lokasi),
+    punyaLokasi('Q',Lokasi),kota(Lokasi),
     hargaSewa(Lokasi,Sewa), /*ini buat harga lokasi*/
     Uang < Sewa,bangkrut.
 checkBayarSewa :- 
     curPlayer(P),getlokasipemain(P,Lokasi),getmoneypemain(P,Uang),
     P = 'Q',
-    punyaLokasi(Lokasi,'P'),kota(Lokasi),
+    punyaLokasi('P',Lokasi),kota(Lokasi),
     hargaSewa(Lokasi,Sewa), /*ini buat harga lokasi*/
     Uang < Sewa,bangkrut.
 checkBayarSewa :- 
     curPlayer(P),getlokasipemain(P,Lokasi),
     P = 'P',
-    punyaLokasi(Lokasi,'Q'),kota(Lokasi),
-    hargaSewa(Lokasi,Harga),/*ini buat harga lokasi*/
-    retractall(player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
-    asserta(player(P, Lokasi, Totaluang-Harga, Totalnilaiproperti,Totalaset)),
-    retractall(player(Q, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
-    asserta(player(Q, Lokasi, Totaluang+Harga, Totalnilaiproperti,Totalaset)).
+    punyaLokasi('Q',Lokasi),kota(Lokasi),
+    hargaAkuisisi(Lokasi,Harga),/*ini buat harga lokasi*/
+    retract(player(P, Lokasi, TotaluangP, Totalnilaiproperti,Totalaset)),
+    retract(player('Q', Lokasi, TotaluangQ, Totalnilaiproperti,Totalaset)),
+    H is TotaluangP-(Harga*0.5),
+    L is TotaluangQ+(Harga*0.5),
+    asserta(player(P, Lokasi, H, Totalnilaiproperti,Totalaset)),
+    asserta(player('Q', Lokasi, L, Totalnilaiproperti,Totalaset)).
 checkBayarSewa :- 
     curPlayer(P),getlokasipemain(P,Lokasi),
     P = 'Q',
-    punyaLokasi(Lokasi,'P'),kota(Lokasi),
-    hargaSewa(Lokasi,Harga),/*ini buat harga lokasi*/
-    retractall(player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
-    asserta(player(P, Lokasi, Totaluang-Harga, Totalnilaiproperti,Totalaset)),
-    retractall(player(Q, Lokasi, Totaluang, Totalnilaiproperti,Totalaset)),
-    asserta(player(Q, Lokasi, Totaluang+Harga, Totalnilaiproperti,Totalaset)).
+    punyaLokasi('P',Lokasi),kota(Lokasi),
+    hargaAkuisisi(Lokasi,Harga),/*ini buat harga lokasi*/
+    retract(player(P, Lokasi, TotaluangQ, Totalnilaiproperti,Totalaset)),
+    retract(player('P', Lokasi, TotaluangP, Totalnilaiproperti,Totalaset)),
+    H is TotaluangQ-(Harga*0.5),
+    L is TotaluangP+(Harga*0.5),
+    asserta(player(P, Lokasi, H, Totalnilaiproperti,Totalaset)),
+    asserta(player('P', Lokasi, L, Totalnilaiproperti,Totalaset)).
 checkBayarSewa.
+
+buyProperti :- 
+curPlayer(P),player(P,Lok,Totaluang,_,_),hargaAkuisisi(Lok,Harga),Totaluang<Harga,print('Uang tidak mencukupi'),!.
+buyProperti :- 
+curPlayer(P),player(P,Lok,Totaluang,_,_),hargaAkuisisi(Lok,Harga),Totaluang>Harga,print('Anda membeli properti di '),nama(Lok,N),print(N),
+beliProperti(Lok),nl,print('Apakah anda mau membeli properti lagi?(0 adalah ya,1 adalah tidak)'),read(X),X=:=1,!.
+buyProperti :- 
+curPlayer(P),player(P,Lok,Totaluang,_,_),hargaAkuisisi(Lok,Harga),Totaluang>Harga,print('Anda membeli properti '),nama(Lok,N),print(N),
+beliProperti(Lok),nl,print('Apakah anda mau membeli properti lagi?(0 adalah ya,1 adalah tidak)'),read(X),X=:=0,buyProperti.
+
