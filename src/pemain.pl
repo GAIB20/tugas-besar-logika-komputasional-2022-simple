@@ -22,7 +22,8 @@ initPemain :-
             asserta(totalLangkah(0)).
 
 /*Fungsi ganti pemain untuk mengganti pemain jika awalnya pemain 1 maka akan menjadi pemain 2 dan sebalikna */
-gantiPemain :- retract(totalLangkah(_)), assertz(totalLangkah(0)), retract(count(_)),assertz(count(0)),curPlayer(P),retract(curPlayer(P)),((P = 'P'-> assertz(curPlayer('Q')));assertz(curPlayer('P'))).
+gantiPemain :- retract(totalLangkah(_)), assertz(totalLangkah(0)), retract(count(_)),assertz(count(0)),curPlayer(P),retract(curPlayer(P)),((P = 'P'-> assertz(curPlayer('Q')));assertz(curPlayer('P'))), 
+curPlayer(P1), write('\n### Giliran Pemain '), write(P1), write(' ###\n'), checkJail.
 /*Untuk mengecek detail kepemilikan suatu pemain*/
 
 checkPlayerDetail:- \+ startgame,!,fail, print("Belum menjalankan startGame!").
