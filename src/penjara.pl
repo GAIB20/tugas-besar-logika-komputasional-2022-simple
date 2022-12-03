@@ -13,14 +13,14 @@ initJail :- assertz(jail('P',0)), assertz(jail('Q',0)).
 
 /* Rules */
 
-% toJail memasukkan pemain ke dalam penjara
-toJail :- curPlayer(X), retract(jail(X,0)), assertz(jail(X,1)),
-assertz(jailturn(X,0)).
-
-% checkJail mengecek lokasi pemain
-checkJail :- curPlayer(P),player(P,Lokasi,_,_,_), Lokasi = 'JL', 
-print('Anda masuk ke dalam penjara.\n'), toJail,!.
+% checkJail mengecek status pemain apakah berada di dalam penjara
+checkJail :- curPlayer(X), jail(X,1), jailAct, !.
 checkJail.
+
+% toJail memasukkan pemain ke dalam penjara
+toJail :- curPlayer(X), ubahLokasi('JL'), print('\nAnda Masuk Penjara.\n'),
+retract(jail(X,0)), assertz(jail(X,1)), assertz(jailturn(X,0)), gantiPemain.
+
 % outOfJail mengeluarkan pemain dari dalam penjara
 outOfJail :- curPlayer(X), retract(jail(X,1)), assertz(jail(X,0)),
 retract(jailturn(X,_)).
@@ -30,31 +30,31 @@ checkUse :- curPlayer(X), punyakartu(X,Y), Y =:= 4.
 
 % useCard menggunakan Get Out of Jail Card pemain
 useCard :- \+checkUse,
-print('Anda tidak memiliki Get Out Of Jail Card.'), !.
+print('\nAnda tidak memiliki Get Out Of Jail Card.\n'), !.
 useCard :- curPlayer(X), checkUse, retract(punyakartu(X,4)), outOfJail,
-print('Get Out of Jail Card digunakan. Anda dapat keluar dari penjara.'), gantiPemain, !.
+print('\nGet Out of Jail Card digunakan. Anda keluar dari penjara.\n'), !.
 
 % checkPay mengecek apakah pemain memiliki uang lebih banyak daripada denda
 checkPay :- curPlayer(X), getmoneypemain(X,Y), Y >= 5000.
 
 % payFine membayar denda untuk keluar dari penjara
 payFine :- \+checkPay,
-print('Anda tidak memiliki jumlah uang yang cukup untuk membayar denda'), !.
+print('\nAnda tidak memiliki jumlah uang yang cukup untuk membayar denda\n'), !.
 payFine :- curPlayer(X), checkPay, getmoneypemain(X,Y), Y1 is Y-5000, ubahMoney(Y1),
-outOfJail, print('Membayar denda. Anda dapat keluar dari penjara.'), gantiPemain, !.
+outOfJail, print('Membayar denda. Anda dapat keluar dari penjara.\n'),  !.
 
 % checkTurn mengecek jumlah Turn pemain berada di penjara
 checkTurn :- curPlayer(X), jailturn(X,Y), Y < 3.
 
 % jailAct menampilkan aksi yang dapat dilakukan pemain
 jailAct :- \+checkTurn, outOfJail,
-print('Sudah 3 Turn di penjara. Anda dapat keluar dari penjara'), !.
+print('\nSudah 3 Turn di penjara. Anda keluar dari penjara.\n'), !.
 jailAct :- curPlayer(X), checkTurn, jailturn(X,Y),
-print('Jumlah Turn Anda berada di dalam penjara: '), print(Y), print(' Turn'), nl,
-print('Berikut aksi yang dapat dilakukan.'), nl,
-print('1. useCard : menggunakan Get Out of Jail Card untuk keluar dari penjara'), nl,
-print('2. payFine : membayar denda untuk keluar dari penjara.'), nl,
-print('3. throwDice : melempar dadu dan menambah jailturn.'), !.
+print('\nJumlah Turn pemain '), print(X), print(' berada di dalam penjara: '), print(Y), print(' Turn.\n'),
+print('Berikut aksi yang dapat dilakukan.\n'),
+print('1. useCard : menggunakan Get Out of Jail Card untuk keluar dari penjara.\n'),
+print('2. payFine : membayar denda untuk keluar dari penjara.\n'),
+print('3. throwDice : melempar dadu dan menambah jailturn.\n'), !.
 
 % plusJailTurn menambah satu jailturn
 plusJailTurn :- curPlayer(X), retract(jailturn(X,Y)), Y1 is Y+1,
