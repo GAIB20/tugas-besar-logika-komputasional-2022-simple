@@ -50,9 +50,9 @@ majuKeLokasi(X) :- curPlayer(P),retract(player(P,A,C,D,E)),assertz(player(P,X,C,
 pindahLokasi(Lokasi,KeI) :- getPos(Lokasi,KeI,IDX), curPlayer(P),retract(player(P,_,C,D,E)),assertz(player(P,IDX,C,D,E)), checkBayarSewa, checkPajak, checkChanceCard, 
  checkWorldTour, checkMiniGame.
 ubahMoney(X) :- curPlayer(P),retract(player(P,B,A,C,D)),T is X+C,assertz(player(P,B,X,C,T)).
-checkGo(Old,New) :- getPos('GO',1,IDXGO), Old < IDXGO, New >= IDXGO, curPlayer(P), getmoneypemain(P,M),  NewM is M + 5000, ubahMoney(NewM),!.
-checkGo(Old,New) :- getPos('GO',1,IDXGO), Old < IDXGO, New =< Old, curPlayer(P), getmoneypemain(P,M),  NewM is M + 5000, ubahMoney(NewM),!.
-checkGo(Old,New) :- getPos('GO',1,IDXGO), Old > IDXGO, New > IDXGO, curPlayer(P), getmoneypemain(P,M),  NewM is M + 5000, ubahMoney(NewM),!.
+checkGo(Old,New) :- getPos('GO',1,IDXGO), Old < IDXGO, New >= IDXGO, print('Anda melewati GO, uang anda bertambah 2500\n'),curPlayer(P), getmoneypemain(P,M),  NewM is M + 2500, ubahMoney(NewM),!.
+checkGo(Old,New) :- getPos('GO',1,IDXGO), Old < IDXGO, New =< Old, print('Anda melewati GO, uang anda bertambah 2500\n'),curPlayer(P), getmoneypemain(P,M),  NewM is M + 2500, ubahMoney(NewM),!.
+checkGo(Old,New) :- getPos('GO',1,IDXGO), Old > IDXGO, New > IDXGO, New =< Old, print('Anda melewati GO, uang anda bertambah 2500\n'),curPlayer(P), getmoneypemain(P,M),  NewM is M + 2500, ubahMoney(NewM),!.
 checkGo(_,_).
 
 /*Menambah kartu X info pemain dan Y nama kartu nya*/

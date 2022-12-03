@@ -365,9 +365,9 @@ checkBayarSewa.
 buyProperti :- 
 curPlayer(P),getlokasipemain(P,Lok), getmoneypemain(P,Totaluang), hargaAkuisisi(Lok,Harga),Totaluang<Harga,print('Uang tidak mencukupi'),!.
 buyProperti :- 
-curPlayer(P),getlokasipemain(P,Lok), getmoneypemain(P,Totaluang),hargaAkuisisi(Lok,Harga),Totaluang>Harga,print('Anda membeli properti di '),nama(Lok,N),print(N),
-beliProperti(Lok),nl,print('Apakah anda mau membeli properti lagi?(0 adalah ya,1 adalah tidak)'),read(X),X=:=1,!.
+curPlayer(P),getlokasipemain(P,Lok), getmoneypemain(P,Totaluang),hargaAkuisisi(Lok,Harga),Totaluang>Harga,print('Anda membeli properti selanjutnya di '),nama(Lok,N),print(N),
+print(' seharga '), print(Harga), beliProperti(Lok),nl,print('Apakah anda mau membeli properti lagi? (y/n) : '),read(X),X = n,!.
 buyProperti :- 
-curPlayer(P),getlokasipemain(P,Lok), getmoneypemain(P,Totaluang),hargaAkuisisi(Lok,Harga),Totaluang>Harga,print('Anda membeli properti '),nama(Lok,N),print(N),
-beliProperti(Lok),nl,print('Apakah anda mau membeli properti lagi?(0 adalah ya,1 adalah tidak)'),read(X),X=:=0,buyProperti.
+curPlayer(P),getlokasipemain(P,Lok), getmoneypemain(P,Totaluang),hargaAkuisisi(Lok,Harga),Totaluang>Harga,print('Anda membeli properti selanjutnya di '),nama(Lok,N),print(N),
+print(' seharga '), print(Harga), beliProperti(Lok),nl,print('Apakah anda mau membeli properti lagi? (y/n) : '),read(X),X = y,buyProperti.
 
