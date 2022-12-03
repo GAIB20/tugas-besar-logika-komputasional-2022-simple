@@ -44,8 +44,7 @@ jualLokasi(A) :- curPlayer(P), punyaLokasi(P,A), hargaTotalLokasi(A,Harga), Harg
                 retract(player(P,B,C,D,_)),L is C+HargaJual,H is D-Harga,T is L+H,assertz(player(P,B,L,H,T)),
                 retract(punyaLokasi(P,A)).
 ubahLokasi(X) :- curPlayer(P),retract(player(P,_,C,D,E)),assertz(player(P,X,C,D,E)), checkBayarSewa, checkChanceCard, checkPajak, checkWorldTour.
-ubahAset(X) :- curPlayer(P),retract(player(P,B,A,C,D)),assertz(player(P,B,A,C,X)).
-ubahMoney(X) :- curPlayer(P),retract(player(P,B,A,C,D)),Y is A+X,T is D+X,assertz(player(P,B,Y,C,T)).
+ubahMoney(X) :- curPlayer(P),retract(player(P,B,A,C,D)),T is X+C,assertz(player(P,B,X,C,T)).
 
 /*Menambah kartu X info pemain dan Y nama kartu nya*/
 addKartu(X,Y) :- assertz(punyakartu(X,Y)).
