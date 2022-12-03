@@ -63,7 +63,7 @@ printAllCard :- write('Daftar Kepemilikan Card :'),nl,assertz(cntcard(1)), curPl
         (cntcard(Cntcar), write(Cntcar), write('. '), namakartu(B,Y), write(Y), nl,
         retract(cntcard(Cntcar)), Cntcard1 is Cntcar+1, assertz(cntcard(Cntcard1)))).
 
-throwDice :- curPlayer(P),jail(P,0),nl,random(1,7,X),random(1,7,Y),nl,nl,write('dadu 1 : '),write(X),write('.'),nl,
+throwDice :- curPlayer(P),jail(P,0),nl,random(1,7,X),random(1,7,Y),write('dadu 1 : '),write(X),write('.'),nl,
 write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), retract(totalLangkah(L)), L1 is L + Z, 
 assertz(totalLangkah(L1)), write(Z), write(' langkah'),nl,
 (Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),
