@@ -115,7 +115,7 @@ checkLocationDetail(Lokasi) :- print(Lokasi), print(' bukan merupakan lokasi yan
 printInfoLokasiTambahan(Lokasi) :- kota(Lokasi), nl,
                                     print('Kepemilikan         : '), (punyaLokasi(P,Lokasi) -> print(P);print('-')), nl,
                                     print('Biaya Sewa Saat Ini : '), (punyaLokasi(P,Lokasi) -> (hargaSewa(Lokasi,Harga) -> print(Harga);print('-')) ;print('-')), nl,
-                                    print('Biaya Akuisisi      : '), (hargaAkuisisi(Lokasi,Harga) -> print(Harga);print(-)), nl,
+                                    print('Biaya Akuisisi      : '), (hargaTotalLokasi(Lokasi,Harga2) -> HargaAkuisisi is Harga2*2, print(HargaAkuisisi);print(-)), nl,
                                     print('Tingkatan Properti  : ' ),(tingkatProp(Lokasi,Prop) -> namaProperti(Prop,Nama), print(Nama);print('-')),!.
 printInfoLokasiTambahan(Lokasi) :- Lokasi = 'CC',
                                     print('list kartu:'),nl,
