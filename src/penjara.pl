@@ -41,7 +41,7 @@ checkPay :- curPlayer(X), getmoneypemain(X,Y), Y >= 5000.
 payFine :- \+checkPay,
 print('\nAnda tidak memiliki jumlah uang yang cukup untuk membayar denda\n'), !.
 payFine :- curPlayer(X), checkPay, getmoneypemain(X,Y), Y1 is Y-5000, ubahMoney(Y1),
-outOfJail, print('Anda membayar denda (sebesar 5000) dan keluar dari penjara.\n'),  !.
+outOfJail, print('\nAnda membayar denda (sebesar 5000) dan keluar dari penjara.\n'),  !.
 
 % checkTurn mengecek jumlah Turn pemain berada di penjara
 checkTurn :- curPlayer(X), jailturn(X,Y), Y < 3.
