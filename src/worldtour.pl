@@ -19,14 +19,14 @@ worldTour(Tujuan):-
     worldTourTax,
     (X > 15;X <8),
     lewatGo,
-    majuKeLokasi(Tujuan),!.
+    majuKeLokasi(X),!.
 worldTour(Tujuan):- 
     uang(All),
     All >= 500,
     getPos(Tujuan,1,X),
     X \= 8,
     worldTourTax,
-    majuKeLokasi(Tujuan),!.
+    majuKeLokasi(X),!.
 worldTour(_):- 
     uang(All),
     All < 500,
