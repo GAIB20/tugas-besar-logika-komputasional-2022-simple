@@ -18,12 +18,12 @@ checkRoll(X,Y) :- X > 90, X =< 100, Y = 5, print('Anda mendapat Angel Card. Simp
 
 % checkCard(X) menentukan aksi berdasarkan angka kartu yang didapat
 checkCard(X) :- X =:= 1, ubahLokasi('TX'), isPajak.
-checkCard(X) :- curPlayer(Y), X =:= 2, getmoneypemain(Y,Z), Z1 is Z+10000, ubahMoney(Z1), gantiPemain.
+checkCard(X) :- curPlayer(Y), X =:= 2, getmoneypemain(Y,Z), Z1 is Z+10000, ubahMoney(Z1).
 checkCard(X) :- X =:= 3, toJail.
-checkCard(X) :- curPlayer(Y), X =:= 4, addKartu(Y,X), gantiPemain.
-checkCard(X) :- curPlayer(Y), X =:= 5, addKartu(Y,X), gantiPemain.
+checkCard(X) :- curPlayer(Y), X =:= 4, addKartu(Y,X).
+checkCard(X) :- curPlayer(Y), X =:= 5, addKartu(Y,X).
 
-% rollCard memanggil fungsi random, checkRoll, checkCard, dan gantiPemain
+% rollCard memanggil fungsi random, checkRoll, checkCard
 rollCard :- random(1, 101, X), checkRoll(X,Y), checkCard(Y), !.
 
 % checkChanceCard mengecek apakah pemain berada di petak chance card
