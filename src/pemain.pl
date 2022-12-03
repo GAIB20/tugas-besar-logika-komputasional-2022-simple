@@ -62,21 +62,17 @@ printAllCard :- write('Daftar Kepemilikan Card :'),nl,assertz(cntcard(1)), curPl
         (cntcard(Cntcar), write(Cntcar), write('. '), namakartu(B,Y), write(Y), nl,
         retract(cntcard(Cntcar)), Cntcard1 is Cntcar+1, assertz(cntcard(Cntcard1)))).
 
-/*throw dice*/
-/*throwDice :- curPlayer(P), write('Sekarang Giliran '),write(P),random(1,7,X), random(1,7,Y),nl,nl,write('dadu 1 : '),write(X),write('.'),nl,
-write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), retract(totalLangkah(L)), L1 is L + Z, assertz(totalLangkah(L1)), write(Z), write(' langkah'),nl,
-(Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);throwDice)); totalLangkah(Total), 
-getlokasipemain(P,Now), nextLoc(Now,Total,Next), ubahLokasi(Next), gantiPemain).*/
-
-
-throwDice :- curPlayer(P),write(P),nl,random(1,7,X),random(1,7,Y),nl,nl,write('dadu 1 : '),write(X),write('.'),nl,
+throwDice :- curPlayer(P),jail(P,0),nl,random(1,7,X),random(1,7,Y),nl,nl,write('dadu 1 : '),write(X),write('.'),nl,
 write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), retract(totalLangkah(L)), L1 is L + Z, 
 assertz(totalLangkah(L1)), write(Z), write(' langkah'),nl,
 (Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),
 (D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);write('')));(retract(count(_)),assertz(count(0)),gantiPemain)),totalLangkah(Total), 
 getlokasipemain(P,Now), nextLoc(Now,Total,Next), ubahLokasi(Next).
 
-
+throwDice :- curPlayer(P), jail(P,1), random(1,7,X), random(1,7,Y), write('\ndadu 1 : '), write(X), write('.\n'),
+write('dadu 2 : '), write(Y), write('.\n'), Z is X+Y,
+(Y =:= X -> (Z is X+Y, write('Double! Anda keluar penjara dan maju sejauh '), write(Z), write(' langkah.\n'), retract(totalLangkah(L)), L1 is L + Z, assertz(totalLangkah(L1)), totalLangkah(Total), getlokasipemain(P,Now), nextLoc(Now,Total,Next), ubahLokasi(Next), outOfJail, gantiPemain); 
+write('Anda tetap berada di dalam penjara. Jail Turn bertambah satu.\n'), plusJailTurn, gantiPemain), !.
 
 getmoneypemain(P,X) :- player(P,_,X,_,_).  
 getasetpemain(P,X) :- player(P,_,_,_,X).
