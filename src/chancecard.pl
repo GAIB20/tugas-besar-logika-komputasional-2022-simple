@@ -17,9 +17,9 @@ checkRoll(X,Y) :- X > 65, X =< 90, Y = 4, print('Anda mendapat Get Out Of Jail C
 checkRoll(X,Y) :- X > 90, X =< 100, Y = 5, print('Anda mendapat Angel Card. Simpan kartu untuk digunakan.').
 
 % checkCard(X) menentukan aksi berdasarkan angka kartu yang didapat
-checkCard(X) :- X =:= 1, ubahLokasi('TX'), isPajak.
+checkCard(X) :- X =:= 1, ubahLokasi('TX'), checkPajak.
 checkCard(X) :- curPlayer(Y), X =:= 2, getmoneypemain(Y,Z), Z1 is Z+10000, ubahMoney(Z1).
-checkCard(X) :- X =:= 3, ubahLokasi('JL'), isJail.
+checkCard(X) :- X =:= 3, ubahLokasi('JL'), checkJail.
 checkCard(X) :- curPlayer(Y), X =:= 4, addKartu(Y,X).
 checkCard(X) :- curPlayer(Y), X =:= 5, addKartu(Y,X).
 
@@ -27,6 +27,7 @@ checkCard(X) :- curPlayer(Y), X =:= 5, addKartu(Y,X).
 rollCard :- random(1, 101, X), checkRoll(X,Y), checkCard(Y), gantiPemain, !.
 
 % isChanceCard mengecek apakah pemain berada di petak chance card
-isChanceCard :- curPlayer(P),player(P,Lokasi,_,_,_), Lokasi = 'CC', 
+checkChanceCard :- curPlayer(P),player(P,Lokasi,_,_,_), Lokasi = 'CC', 
 print('Selamat datang di Chance Card! Anda akan mengambil satu kartu secara acak. Berikut hasil kartu anda\n'),
 rollCard.
+checkChanceCard.

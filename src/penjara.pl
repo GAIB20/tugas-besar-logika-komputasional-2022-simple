@@ -17,10 +17,10 @@ initJail :- assertz(jail('P',0)), assertz(jail('Q',0)).
 toJail :- curPlayer(X), retract(jail(X,0)), assertz(jail(X,1)),
 assertz(jailturn(X,0)).
 
-% isJail mengecek lokasi pemain
-isJail :- curPlayer(P),player(P,Lokasi,_,_,_), Lokasi = 'JL', 
-print('Anda masuk ke dalam penjara.\n'), toJail.
-
+% checkJail mengecek lokasi pemain
+checkJail :- curPlayer(P),player(P,Lokasi,_,_,_), Lokasi = 'JL', 
+print('Anda masuk ke dalam penjara.\n'), toJail,!.
+checkJail.
 % outOfJail mengeluarkan pemain dari dalam penjara
 outOfJail :- curPlayer(X), retract(jail(X,1)), assertz(jail(X,0)),
 retract(jailturn(X,_)).

@@ -1,6 +1,6 @@
-listLokasi(['FP','E1','E2','E3','CC','F1','F2','F3','WT','G1','G2','G3','TX','CC','H1','H2','GO','A1','A2','A3','CC','B1','B2','B3','JL','C1','C2','C3','TX','D1','D2','D3']).
+listLokasi(['FP','E1','E2','E3','CC','F1','F2','F3','MG','WT','G1','G2','G3','TX','CC','H1','H2','GO','A1','A2','A3','CC','B1','B2','B3','MG','JL','C1','C2','C3','TX','D1','D2','D3']).
 heightMap(9).
-widthMap(9).
+widthMap(10).
 
 getPos(Lokasi,IDX) :- listLokasi(List), getIdx(List,Lokasi,IDX).
 getLoc(IDX,Lokasi) :- listLokasi(List), getVal(List,IDX,Lokasi).

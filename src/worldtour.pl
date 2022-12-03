@@ -32,7 +32,8 @@ worldTour(_):-
     All < 500,
     print("Uang tidak cukup untuk World Tour"),nl.
 
-isWorldTour :- curPlayer(P),player(P,Lokasi,_,_,_), Lokasi = 'WT', 
+checkWorldTour :- curPlayer(P),getlokasipemain(P,Lokasi), Lokasi = 'WT', 
             print('Selamat datang di world tour!\nSilahkan masukkan kode lokasi tujuan anda: '), 
             read(Tujuan), 
             worldTour(Tujuan).
+checkWorldTour.

@@ -39,7 +39,7 @@ akuisisiLokasi(A) :- curPlayer(P),punyaLokasi(P,A), hargaAkuisisi(A,Harga), naik
 jualLokasi(A) :- curPlayer(P), punyaLokasi(P,A), hargaTotalLokasi(A,Harga), HargaJual is 8*Harga/10,
                 retract(player(P,B,C,D,_)),L is C+HargaJual,H is D-Harga,T is L+H,assertz(player(P,B,L,H,T)),
                 retract(punyaLokasi(P,A)).
-ubahLokasi(X) :- curPlayer(P),retract(player(P,_,C,D,E)),assertz(player(P,X,C,D,E)).
+ubahLokasi(X) :- curPlayer(P),retract(player(P,_,C,D,E)),assertz(player(P,X,C,D,E)), checkBayarSewa, checkChanceCard, checkPajak, checkWorldTour.
 ubahMoney(X) :- curPlayer(P),retract(player(P,B,_,C,D)),assertz(player(P,B,X,C,D)).
 
 /*Menambah kartu X info pemain dan Y nama kartu nya*/
@@ -61,7 +61,7 @@ printAllCard :- write('Daftar Kepemilikan Card :'),nl,assertz(cntcard(1)), curPl
 /*throw dice*/
 throwDice :- curPlayer(P), write('Sekarang Giliran '),write(P),random(1,7,X), random(1,7,Y),nl,nl,write('dadu 1 : '),write(X),write('.'),nl,
 write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), retract(totalLangkah(L)), L1 is L + Z, assertz(totalLangkah(L1)), write(Z), write(' langkah'),nl,
-(Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);throwDice)); totalLangkah(Total), getlokasipemain(P,Now), nextLoc(Now,Total,Next), ubahLokasi(Next), isLainKepemilikan, isPajak, isWorldTour, gantiPemain).
+(Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, assertz(count(D)),(D =:= 3 -> (write('Anda masuk penjara'), gantiPemain);throwDice)); totalLangkah(Total), getlokasipemain(P,Now), nextLoc(Now,Total,Next), ubahLokasi(Next), gantiPemain).
 
 getmoneypemain(P,X) :- player(P,_,X,_,_).  
 getasetpemain(P,X) :- player(P,_,_,_,X).
