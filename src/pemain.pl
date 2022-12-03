@@ -28,8 +28,8 @@ curPlayer(P1), write('\n### Giliran Pemain '), write(P1), write(' ###\n'), check
 /*Untuk mengecek detail kepemilikan suatu pemain*/
 
 checkPlayerDetail:- \+ startgame,!,fail, print("Belum menjalankan startGame!").
-checkPlayerDetail:- curPlayer(P),player(P, Lokasi, Totaluang, Totalnilaiproperti,Totalaset),write('Informasi Player '), write('('),write(P),write(')'),nl,nl,
-                                write('Lokasi                    :'), write(Lokasi),nl,
+checkPlayerDetail:- curPlayer(P),player(P,_, Totaluang, Totalnilaiproperti,Totalaset),write('Informasi Player '), write('('),write(P),write(')'),nl,nl,
+                                write('Lokasi                    :'), getlokasipemain(P, Lokasi), write(Lokasi),nl,
                                 write('Total Uang                :'), write(Totaluang),nl,
                                 write('Total Nilai Properti      :'), write(Totalnilaiproperti),nl,
                                 write('Total Aset                :'), write(Totalaset),nl,nl,
@@ -45,10 +45,12 @@ beliProperti(A) :- curPlayer(P),punyaLokasi(P,A), hargaAkuisisi(A,Harga), naikTi
 jualLokasi(A) :- curPlayer(P), punyaLokasi(P,A), hargaTotalLokasi(A,Harga), HargaJual is Harga*0.8,
                 retract(player(P,B,C,D,_)),L is C+HargaJual,H is D-Harga,T is L+H,assertz(player(P,B,L,H,T)),
                 retract(punyaLokasi(P,A)).
-majuKeLokasi(X) :- curPlayer(P),retract(player(P,_,C,D,E)),assertz(player(P,X,C,D,E)), checkBayarSewa, checkPajak, checkChanceCard, 
+majuKeLokasi(X) :- curPlayer(P),retract(player(P,A,C,D,E)),assertz(player(P,X,C,D,E)), checkGo(A,X), checkBayarSewa, checkPajak, checkChanceCard, 
+ checkWorldTour, checkMiniGame.
+pindahLokasi(Lokasi,KeI) :- getPos(Lokasi,KeI,IDX), curPlayer(P),retract(player(P,_,C,D,E)),assertz(player(P,IDX,C,D,E)), checkBayarSewa, checkPajak, checkChanceCard, 
  checkWorldTour, checkMiniGame.
 ubahMoney(X) :- curPlayer(P),retract(player(P,B,A,C,D)),T is X+C,assertz(player(P,B,X,C,T)).
-
+checkGo(_,_).
 /*Menambah kartu X info pemain dan Y nama kartu nya*/
 addKartu(X,Y) :- assertz(punyakartu(X,Y)).
 
