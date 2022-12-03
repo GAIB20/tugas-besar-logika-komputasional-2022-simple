@@ -12,4 +12,5 @@ random(1,500,X),nl,write(X),nl,write('You guess :  '),read(Z),
 writehasilminigame);salah));(write('Wrong ANswer'),nl,writehasilminigame)).
 
 
-writehasilminigame :- youget(A),write('You get '),write(A),write(' koin').
+writehasilminigame :- youget(A),write('You get '),write(A),write(' koin'),ubahMoney(A).
+checkMiniGame :- initAwal,getlokasipemain(X),X = 'MG',minigame.
