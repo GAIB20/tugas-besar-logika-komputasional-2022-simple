@@ -363,11 +363,11 @@ checkBayarSewa :-
 checkBayarSewa.
 
 buyProperti :- 
-curPlayer(P),player(P,Lok,Totaluang,_,_),hargaAkuisisi(Lok,Harga),Totaluang<Harga,print('Uang tidak mencukupi'),!.
+curPlayer(P),getlokasipemain(P,Lok), getmoneypemain(P,Totaluang), hargaAkuisisi(Lok,Harga),Totaluang<Harga,print('Uang tidak mencukupi'),!.
 buyProperti :- 
-curPlayer(P),player(P,Lok,Totaluang,_,_),hargaAkuisisi(Lok,Harga),Totaluang>Harga,print('Anda membeli properti di '),nama(Lok,N),print(N),
+curPlayer(P),getlokasipemain(P,Lok), getmoneypemain(P,Totaluang),hargaAkuisisi(Lok,Harga),Totaluang>Harga,print('Anda membeli properti di '),nama(Lok,N),print(N),
 beliProperti(Lok),nl,print('Apakah anda mau membeli properti lagi?(0 adalah ya,1 adalah tidak)'),read(X),X=:=1,!.
 buyProperti :- 
-curPlayer(P),player(P,Lok,Totaluang,_,_),hargaAkuisisi(Lok,Harga),Totaluang>Harga,print('Anda membeli properti '),nama(Lok,N),print(N),
+curPlayer(P),getlokasipemain(P,Lok), getmoneypemain(P,Totaluang),hargaAkuisisi(Lok,Harga),Totaluang>Harga,print('Anda membeli properti '),nama(Lok,N),print(N),
 beliProperti(Lok),nl,print('Apakah anda mau membeli properti lagi?(0 adalah ya,1 adalah tidak)'),read(X),X=:=0,buyProperti.
 

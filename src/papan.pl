@@ -2,17 +2,18 @@ listLokasi(['FP','E1','E2','E3','CC','F1','F2','F3','MG','WT','G1','G2','G3','TX
 heightMap(9).
 widthMap(10).
 
-getPos(Lokasi,IDX) :- listLokasi(List), getIdx(List,Lokasi,IDX).
+getPos(Lokasi,KeI,IDX) :- listLokasi(List), getIdx(List,Lokasi,KeI,IDX).
 getLoc(IDX,Lokasi) :- listLokasi(List), getVal(List,IDX,Lokasi).
 
 
 getVal([A|_],0,A) :- !.
 getVal([_|C],IDX,RES) :- IDX1 is IDX-1, getVal(C,IDX1,RES).
-getIdx([Val|_],Val,0):- !.
-getIdx([A|C],Val,IDX) :- \+ A = Val, getIdx(C,Val,IDX1), IDX is IDX1+1.
+getIdx([Val|_],Val,1,0):- !.
+getIdx([Val|C],Val,KeI,IDX) :- KeI1 is KeI-1, getIdx(C,Val,KeI1,IDX1), IDX is IDX1+1.
+getIdx([A|C],Val,KeI,IDX) :- \+ A = Val, getIdx(C,Val,KeI,IDX1), IDX is IDX1+1.
 
 totalLoc(X) :- heightMap(H),widthMap(W), X is H*2+W*2-4.
-nextLoc(A,Dist,B) :- getPos(A,X), totalLoc(Len), X1 is (X+Dist) mod (Len), getLoc(X1,B). 
+nextLoc(A,Dist,B) :- totalLoc(Len), B is (A+Dist) mod (Len). 
 
 printEmptyCell :- print('    ').
 
