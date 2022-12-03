@@ -1,5 +1,10 @@
-pajak :- curPlayer(P),player(P,B,C,D,E),B = 'TX',write('Hallo '),write(P),nl,write('Anda harus membayar sebanyak :'),H is E*0.1,write(H).
+pajak :- curPlayer(P), 
+        getmoneypemain(P,C), getasetpemain(P,E),
+        write('Anda harus membayar sebanyak :'),H is E*0.1,write(H),nl,
+        bangkrut(H),
+        CurUang is C-(E*0.1), ubahMoney(CurUang),
+        write('Setelah membayar pajak memiliki uang sebesar : '), write(CurUang).
 
 checkPajak:- curPlayer(P), getlokasipemain(P,Lokasi), Lokasi = 'TX', 
-        write('Selamat datang dikantor pajak!!!'),pajak.
+        write('Selamat datang dikantor pajak!!!'),nl,pajak.
 checkPajak.
