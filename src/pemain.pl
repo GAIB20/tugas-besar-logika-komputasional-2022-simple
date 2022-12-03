@@ -45,7 +45,7 @@ beliProperti(A) :- curPlayer(P),punyaLokasi(P,A), hargaAkuisisi(A,Harga), naikTi
 jualLokasi(A) :- curPlayer(P), punyaLokasi(P,A), hargaTotalLokasi(A,Harga), HargaJual is Harga*0.8,
                 retract(player(P,B,C,D,_)),L is C+HargaJual,H is D-Harga,T is L+H,assertz(player(P,B,L,H,T)),
                 retract(punyaLokasi(P,A)).
-ubahLokasi(X) :- curPlayer(P),retract(player(P,_,C,D,E)),assertz(player(P,X,C,D,E)), checkBayarSewa, checkPajak, checkChanceCard, 
+majuKeLokasi(X) :- curPlayer(P),retract(player(P,_,C,D,E)),assertz(player(P,X,C,D,E)), checkBayarSewa, checkPajak, checkChanceCard, 
  checkWorldTour, checkMiniGame.
 ubahMoney(X) :- curPlayer(P),retract(player(P,B,A,C,D)),T is X+C,assertz(player(P,B,X,C,T)).
 
@@ -69,13 +69,13 @@ throwDice :- curPlayer(P),jail(P,0),nl,random(1,7,X),random(1,7,Y),write('dadu 1
 write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), retract(totalLangkah(L)), L1 is L + Z, 
 assertz(totalLangkah(L1)), write(Z), write(' langkah'),nl,
 (Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, 
-assertz(count(D)),getlokasipemainIDX(P,Now), nextLoc(Now,L1,Next), ubahLokasi(Next),retract(totalLangkah(_)),assertz(totalLangkah(0)),
+assertz(count(D)),getlokasipemainIDX(P,Now), nextLoc(Now,L1,Next), majuKeLokasi(Next),retract(totalLangkah(_)),assertz(totalLangkah(0)),
 (D =:= 3 -> (write('Anda masuk penjara'), toJail, gantiPemain);write('')));(retract(count(_)),
-assertz(count(0)),getlokasipemainIDX(P,Now),nextLoc(Now,L1,Next),ubahLokasi(Next),gantiPemain)),!.
+assertz(count(0)),getlokasipemainIDX(P,Now),nextLoc(Now,L1,Next),majuKeLokasi(Next),gantiPemain)),!.
 
 throwDice :- curPlayer(P), jail(P,1), random(1,7,X), random(1,7,Y), write('\ndadu 1 : '), write(X), write('.\n'),
 write('dadu 2 : '), write(Y), write('.\n'), Z is X+Y,
-(Y =:= X -> (Z is X+Y, write('Double! Anda keluar penjara dan maju sejauh '), write(Z), write(' langkah.\n'), retract(totalLangkah(L)), L1 is L + Z, assertz(totalLangkah(L1)), totalLangkah(Total), getlokasipemain(P,Now), nextLoc(Now,Total,Next), ubahLokasi(Next), outOfJail, gantiPemain); 
+(Y =:= X -> (Z is X+Y, write('Double! Anda keluar penjara dan maju sejauh '), write(Z), write(' langkah.\n'), retract(totalLangkah(L)), L1 is L + Z, assertz(totalLangkah(L1)), totalLangkah(Total), getlokasipemain(P,Now), nextLoc(Now,Total,Next), majuKeLokasi(Next), outOfJail, gantiPemain); 
 write('Anda tetap berada di dalam penjara. Jail Turn bertambah satu.\n'), plusJailTurn, gantiPemain), !.
 
 getmoneypemain(P,X) :- player(P,_,X,_,_).  

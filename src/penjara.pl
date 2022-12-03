@@ -18,7 +18,7 @@ checkJail :- curPlayer(X), jail(X,1), jailAct, !.
 checkJail.
 
 % toJail memasukkan pemain ke dalam penjara
-toJail :- curPlayer(X), ubahLokasi('JL'), print('\nAnda Masuk Penjara.\n'),
+toJail :- curPlayer(X), majuKeLokasi('JL'), print('\nAnda Masuk Penjara.\n'),
 retract(jail(X,0)), assertz(jail(X,1)), assertz(jailturn(X,0)).
 
 % outOfJail mengeluarkan pemain dari dalam penjara
