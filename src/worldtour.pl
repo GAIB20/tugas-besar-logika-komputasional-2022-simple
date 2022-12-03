@@ -14,7 +14,7 @@ uang(Total) :- curPlayer(P), player(P, _, Totaluang, _,_), Total is Totaluang.
 worldTour(Tujuan):- 
     uang(All),
     All >= 500,
-    getPos(Tujuan,X),
+    getPos(Tujuan,1,X),
     X \= 8,
     worldTourTax,
     (X > 15;X <8),
@@ -23,7 +23,7 @@ worldTour(Tujuan):-
 worldTour(Tujuan):- 
     uang(All),
     All >= 500,
-    getPos(Tujuan,X),
+    getPos(Tujuan,1,X),
     X \= 8,
     worldTourTax,
     ubahLokasi(Tujuan),!.

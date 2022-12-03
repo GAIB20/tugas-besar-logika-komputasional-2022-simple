@@ -16,8 +16,9 @@
 /*Fungsi init pemain adalah menginitkan semua nilai-nilai awal dan menset curPlayer  yang akan pertama kali bermain adalah pemain 1*/
 
 initPemain :- 
-            asserta(player('P', 'GO',5000,0,5000)), 
-            asserta(player('Q', 'GO',5000,0,5000)),
+            getPos('GO',1,IDXSTART),
+            asserta(player('P', IDXSTART,5000,0,5000)), 
+            asserta(player('Q', IDXSTART,5000,0,5000)),
             asserta(curPlayer('P')),assertz(count(0)),
             asserta(totalLangkah(0)).
 
@@ -68,9 +69,9 @@ throwDice :- curPlayer(P),jail(P,0),nl,random(1,7,X),random(1,7,Y),write('dadu 1
 write('dadu 2 : '),write(Y),write('.'),nl, Z is X+Y, write('Anda maju sejauh '), retract(totalLangkah(L)), L1 is L + Z, 
 assertz(totalLangkah(L1)), write(Z), write(' langkah'),nl,
 (Y =:= X -> (write('double '),nl, retract(count(A)), D is A+1, 
-assertz(count(D)),getlokasipemain(P,Now), nextLoc(Now,L1,Next), ubahLokasi(Next),
+assertz(count(D)),getlokasipemainIDX(P,Now), nextLoc(Now,L1,Next), ubahLokasi(Next),
 (D =:= 3 -> (write('Anda masuk penjara'), toJail, gantiPemain);write('')));(retract(count(_)),
-assertz(count(0)),getlokasipemain(P,Now),nextLoc(Now,L1,Next),ubahLokasi(Next),gantiPemain)),!.
+assertz(count(0)),getlokasipemainIDX(P,Now),nextLoc(Now,L1,Next),ubahLokasi(Next),gantiPemain)),!.
 
 throwDice :- curPlayer(P), jail(P,1), random(1,7,X), random(1,7,Y), write('\ndadu 1 : '), write(X), write('.\n'),
 write('dadu 2 : '), write(Y), write('.\n'), Z is X+Y,
@@ -80,4 +81,5 @@ write('Anda tetap berada di dalam penjara. Jail Turn bertambah satu.\n'), plusJa
 getmoneypemain(P,X) :- player(P,_,X,_,_).  
 getasetpemain(P,X) :- player(P,_,_,_,X).
 getpropertipemain(P,X) :- player(P,_,_,X,_).
-getlokasipemain(P,X) :- player(P,X,_,_,_).
+getlokasipemain(P,X) :- player(P,IDX,_,_,_), getLoc(IDX,X).
+getlokasipemainIDX(P,IDX) :- player(P,IDX,_,_,_).
