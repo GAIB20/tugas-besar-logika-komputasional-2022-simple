@@ -1,7 +1,11 @@
 :- dynamic(player/5).
+% pemain(Namapemain, Lokasi, Uang, Aset, Totalaset)
 :- dynamic(curPlayer/1).
+% nama pemain saat ini
 :- dynamic(punyaLokasi/2).
+% punyaLokasi(X,A) : player X punya lokasi A
 :- dynamic(punyakartu/2).
+% punyaKart()
 :- dynamic(cnt/1).
 :- dynamic(count/1).
 :- dynamic(totalLangkah/1).
@@ -29,10 +33,10 @@ checkPlayerDetail:- curPlayer(P),player(P, Lokasi, Totaluang, Totalnilaiproperti
                                 write('Total Aset                :'), write(Totalaset),nl,nl,
                                 printAllProperti,nl,nl,printAllCard.
 
-/*Mengakuisisi sebuah lokasi A menjadi tingkat yang lebih tinggi, e.g : tanah -> b1 -> b2 -> b3 -> landmark, sebagai info player saat ini */
-akuisisiLokasi(A) :- curPlayer(P),\+ punyaLokasi(P,A), assertz(punyaLokasi(P,A)), hargaAkuisisi(A,Harga), naikTingkatProperti(A),
+/*Membeli properti pada sebuah lokasi A menjadi tingkat yang lebih tinggi, e.g : tanah -> b1 -> b2 -> b3 -> landmark, sebagai info player saat ini */
+beliProperti(A) :- curPlayer(P),\+ punyaLokasi(P,A), assertz(punyaLokasi(P,A)), hargaAkuisisi(A,Harga), naikTingkatProperti(A),
                     retract(player(P,B,C,D,E)),L is C-Harga,H is D+Harga,assertz(player(P,B,L,H,E)),!.
-akuisisiLokasi(A) :- curPlayer(P),punyaLokasi(P,A), hargaAkuisisi(A,Harga), naikTingkatProperti(A), 
+beliProperti(A) :- curPlayer(P),punyaLokasi(P,A), hargaAkuisisi(A,Harga), naikTingkatProperti(A), 
                     retract(player(P,B,C,D,E)),L is C-Harga,H is D+Harga,assertz(player(P,B,L,H,E)).
 
 /*Menjual sebuah lokasi A yang dimiliki player saat ini */
