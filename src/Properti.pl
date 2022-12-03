@@ -344,39 +344,22 @@ print('Harga Sewa landmark   : '),sewa(X,'L',Y5),print(Y5),print('\n').
 
 
 checkBayarSewa :- 
-    curPlayer(P),getlokasipemain(P,Lokasi), getmoneypemain(P,Uang),
-    P = 'P',
-    punyaLokasi('Q',Lokasi),kota(Lokasi),
-    hargaSewa(Lokasi,Sewa), /*ini buat harga lokasi*/
-    Uang < Sewa,bangkrut.
-checkBayarSewa :- 
-    curPlayer(P),getlokasipemain(P,Lokasi),getmoneypemain(P,Uang),
-    P = 'Q',
-    punyaLokasi('P',Lokasi),kota(Lokasi),
-    hargaSewa(Lokasi,Sewa), /*ini buat harga lokasi*/
-    Uang < Sewa,bangkrut.
-checkBayarSewa :- 
     curPlayer(P),getlokasipemain(P,Lokasi),
-    P = 'P',
-    punyaLokasi('Q',Lokasi),kota(Lokasi),
-    hargaAkuisisi(Lokasi,Harga),/*ini buat harga lokasi*/
-    retract(player(P, Lokasi, TotaluangP, Totalnilaiproperti,Totalaset)),
-    retract(player('Q', Lokasi, TotaluangQ, Totalnilaiproperti,Totalaset)),
-    H is TotaluangP-(Harga*0.5),
-    L is TotaluangQ+(Harga*0.5),
-    asserta(player(P, Lokasi, H, Totalnilaiproperti,Totalaset)),
-    asserta(player('Q', Lokasi, L, Totalnilaiproperti,Totalaset)).
-checkBayarSewa :- 
-    curPlayer(P),getlokasipemain(P,Lokasi),
-    P = 'Q',
-    punyaLokasi('P',Lokasi),kota(Lokasi),
-    hargaAkuisisi(Lokasi,Harga),/*ini buat harga lokasi*/
-    retract(player(P, Lokasi, TotaluangQ, Totalnilaiproperti,Totalaset)),
-    retract(player('P', Lokasi, TotaluangP, Totalnilaiproperti,Totalaset)),
-    H is TotaluangQ-(Harga*0.5),
-    L is TotaluangP+(Harga*0.5),
-    asserta(player(P, Lokasi, H, Totalnilaiproperti,Totalaset)),
-    asserta(player('P', Lokasi, L, Totalnilaiproperti,Totalaset)).
+    (P = 'P' -> Lawan = 'Q' ;Lawan = 'P'),
+    punyaLokasi(Lawan,Lokasi),kota(Lokasi),
+    hargaSewa(Lokasi,Harga), /*ini buat harga lokasi*/
+    Harusbayar is Harga*0.5,
+    print('Biaya sewa yang harus kamu bayar adalah '),print(Harusbayar),nl,
+    bangkrut(Harga),
+    retract(player(P, Lokasi1, TotaluangPemain, NilaiProperti1,TotalAset1)),
+    retract(player(Lawan, Lokasi2, TotaluangLawan, NilaiProperti2,TotalAset2)),
+    H is TotaluangPemain-(Harga*0.5),
+    L is TotaluangLawan+(Harga*0.5),
+    print('Uang kamu yang tersisa : '),print(H),nl,
+    Totalaset11 is TotalAset1 - (Harga*0.5),
+    Totalaset21 is TotalAset2 + (Harga*0.5),
+    asserta(player(P, Lokasi1, H, NilaiProperti1,Totalaset11)),
+    asserta(player(Lawan, Lokasi2, L, NilaiProperti2,Totalaset21)),!.
 checkBayarSewa.
 
 buyProperti :- 

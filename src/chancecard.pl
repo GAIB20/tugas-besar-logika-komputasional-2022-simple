@@ -17,7 +17,7 @@ checkRoll(X,Y) :- X > 65, X =< 90, Y = 4, print('Anda mendapat Get Out Of Jail C
 checkRoll(X,Y) :- X > 90, X =< 100, Y = 5, print('Anda mendapat Angel Card. Simpan kartu untuk digunakan.\n').
 
 % checkCard(X) menentukan aksi berdasarkan angka kartu yang didapat
-checkCard(X) :- X =:= 1, ubahLokasi('TX'), isPajak.
+checkCard(X) :- X =:= 1, ubahLokasi('TX').
 checkCard(X) :- curPlayer(Y), X =:= 2, getmoneypemain(Y,Z), Z1 is Z+10000, ubahMoney(Z1).
 checkCard(X) :- X =:= 3, toJail.
 checkCard(X) :- curPlayer(Y), X =:= 4, addKartu(Y,X).

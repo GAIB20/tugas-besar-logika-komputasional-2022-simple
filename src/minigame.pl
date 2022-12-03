@@ -14,3 +14,4 @@ writehasilminigame);salah));(write('Wrong ANswer'),nl,writehasilminigame)).
 
 writehasilminigame :- curPlayer(P),youget(A),write('You get '),write(A),write(' koin'),getmoneypemain(P,S),X is S+A,ubahMoney(X).
 checkMiniGame :- initAwal,curPlayer(P),getlokasipemain(P,Lokasi),Lokasi = 'MG',minigame.
+checkMiniGame.
